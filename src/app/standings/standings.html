@@ -1,80 +1,257 @@
-<div class="max-w-5xl mx-auto p-6">
-  <h1 class="text-3xl font-bold mb-6 text-center">🏆 Medal Standings</h1>
-
-  <div class="overflow-x-auto bg-white shadow-lg rounded-2xl">
-    <table class="min-w-full text-sm text-gray-700">
-      <thead class="bg-gray-100 text-gray-800 text-xs uppercase">
-        <tr>
-          <th class="text-left p-3">Rank</th>
-          <th class="text-left p-3">College</th>
-          <th class="p-3 text-center">🥇</th>
-          <th class="p-3 text-center">🥈</th>
-          <th class="p-3 text-center">🥉</th>
-          <th class="p-3 text-center">Total</th>
-        </tr>
-      </thead>
-      <tbody>
-        @for (item of rows(); track $index) {
-        <tr
-          class="border-t hover:bg-gray-50 transition"
-          [class.bg-yellow-50]="item.rank === 1"
-          [class.bg-gray-50]="item.rank === 2"
-          [class.bg-orange-50]="item.rank === 3"
-        >
-          <td class="p-3 font-semibold text-lg">{{ item.rank }}</td>
-          <td class="p-3 flex items-center gap-2">
-            <span
-              class="w-3 h-3 rounded-full"
-              [style.background]="item.color"
-            ></span>
-            {{ item.name }}
-          </td>
-          <td class="text-center p-3 font-semibold text-yellow-600">
-            {{ item.gold }}
-          </td>
-          <td class="text-center p-3 font-semibold text-gray-500">
-            {{ item.silver }}
-          </td>
-          <td class="text-center p-3 font-semibold text-orange-600">
-            {{ item.bronze }}
-          </td>
-          <td class="text-center p-3 font-bold text-indigo-700">
-            {{ item.total }}
-          </td>
-        </tr>
-        }
-      </tbody>
-    </table>
-  </div>
-
-  <!-- Announcements -->
-  <a
-    routerLink="/announcements"
-    class="inline-block mt-6 text-pink-600 hover:text-pink-700 font-medium underline"
-  >
-    📢 See announcements →
-  </a>
-
-  <!-- Admin Login Button -->
-  @if (!auth.currentUser) {
-  <div class="mt-8 text-center">
-    <p class="text-gray-600 text-sm mb-3">Are you an admin?</p>
+<div class="max-w-5xl mx-auto p-6 space-y-10">
+  <div class="mt-6 flex flex-wrap gap-4 justify-center text-sm">
+    @if (!auth.currentUser) {
     <a
       routerLink="/login"
-      class="inline-block bg-pink-600 hover:bg-pink-700 text-white px-6 py-2.5 rounded-xl font-semibold shadow-md transition"
+      class="bg-pink-600 hover:bg-pink-700 text-white px-4 py-2 rounded-lg font-semibold shadow"
+      >Admin Login</a
     >
-      Login Here
-    </a>
-  </div>
-  } @else {
-  <div class="mt-8 text-center">
-    <p class="text-gray-600 text-sm mb-3">You are logged in as an admin.</p>
+    } @else {
     <a
       routerLink="/admin"
-      class="inline-block bg-pink-600 hover:bg-pink-700 text-white px-6 py-2.5 rounded-xl font-semibold shadow-md transition"
+      class="bg-pink-600 hover:bg-pink-700 text-white px-4 py-2 rounded-lg font-semibold shadow"
+      >Admin Dashboard</a
     >
-      Go to Admin Dashboard
-    </a>
+    }
   </div>
-  }
+
+  <!-- Points-Based Overall Ranking -->
+  <div>
+    <h1 class="text-3xl font-bold mb-6 text-center">
+      🏅 Overall Points Ranking
+    </h1>
+    <div class="overflow-x-auto bg-white shadow-lg rounded-2xl">
+      <table class="min-w-full text-sm text-gray-700">
+        <thead class="bg-indigo-50 text-gray-800 text-xs uppercase">
+          <tr>
+            <th class="text-left p-3">Rank</th>
+            <th class="text-left p-3">College</th>
+            <th class="p-3 text-center">Total Points</th>
+            <th class="p-3 text-center">🥇</th>
+            <th class="p-3 text-center">🥈</th>
+            <th class="p-3 text-center">🥉</th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (item of pointsRows(); track item.id) {
+          <tr
+            class="border-t hover:bg-gray-50 transition"
+            [class.bg-yellow-50]="item.rank === 1"
+            [class.bg-gray-50]="item.rank === 2"
+            [class.bg-orange-50]="item.rank === 3"
+          >
+            <td class="p-3 font-semibold text-lg">{{ item.rank }}</td>
+            <td class="p-3 flex items-center gap-2">
+              <span
+                class="w-3 h-3 rounded-full"
+                [style.background]="item.color"
+              ></span>
+              {{ item.name }}
+            </td>
+            <td class="text-center p-3 font-bold text-indigo-700">
+              {{ item.points }}
+            </td>
+            <td class="text-center p-3 font-semibold text-yellow-600">
+              {{ item.gold }}
+            </td>
+            <td class="text-center p-3 font-semibold text-gray-500">
+              {{ item.silver }}
+            </td>
+            <td class="text-center p-3 font-semibold text-orange-600">
+              {{ item.bronze }}
+            </td>
+          </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- Medal Standings (by medal hierarchy) -->
+  <div>
+    <h2 class="text-3xl font-bold mb-6 text-center">
+      🏆 Medal Standings (Gold > Silver > Bronze)
+    </h2>
+    <div class="overflow-x-auto bg-white shadow-lg rounded-2xl">
+      <table class="min-w-full text-sm text-gray-700">
+        <thead class="bg-gray-100 text-gray-800 text-xs uppercase">
+          <tr>
+            <th class="text-left p-3">Rank</th>
+            <th class="text-left p-3">College</th>
+            <th class="p-3 text-center">🥇</th>
+            <th class="p-3 text-center">🥈</th>
+            <th class="p-3 text-center">🥉</th>
+            <th class="p-3 text-center">Medal Sum</th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (item of rows(); track item.id) {
+          <tr
+            class="border-t hover:bg-gray-50 transition"
+            [class.bg-yellow-50]="item.rank === 1"
+            [class.bg-gray-50]="item.rank === 2"
+            [class.bg-orange-50]="item.rank === 3"
+          >
+            <td class="p-3 font-semibold text-lg">{{ item.rank }}</td>
+            <td class="p-3 flex items-center gap-2">
+              <span
+                class="w-3 h-3 rounded-full"
+                [style.background]="item.color"
+              ></span>
+              {{ item.name }}
+            </td>
+            <td class="text-center p-3 font-semibold text-yellow-600">
+              {{ item.gold }}
+            </td>
+            <td class="text-center p-3 font-semibold text-gray-500">
+              {{ item.silver }}
+            </td>
+            <td class="text-center p-3 font-semibold text-orange-600">
+              {{ item.bronze }}
+            </td>
+            <td class="text-center p-3 font-bold text-indigo-700">
+              {{ item.total }}
+            </td>
+          </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- Total Medals Ranking -->
+  <div>
+    <h2 class="text-3xl font-bold mb-6 text-center">🥇 Total Medals Ranking</h2>
+    <div class="overflow-x-auto bg-white shadow-lg rounded-2xl">
+      <table class="min-w-full text-sm text-gray-700">
+        <thead class="bg-yellow-50 text-gray-800 text-xs uppercase">
+          <tr>
+            <th class="text-left p-3">Rank</th>
+            <th class="text-left p-3">College</th>
+            <th class="p-3 text-center">Total Medals</th>
+            <th class="p-3 text-center">🥇</th>
+            <th class="p-3 text-center">🥈</th>
+            <th class="p-3 text-center">🥉</th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (item of totalMedalsRows(); track item.id) {
+          <tr
+            class="border-t hover:bg-gray-50 transition"
+            [class.bg-yellow-50]="item.rank === 1"
+            [class.bg-gray-50]="item.rank === 2"
+            [class.bg-orange-50]="item.rank === 3"
+          >
+            <td class="p-3 font-semibold text-lg">{{ item.rank }}</td>
+            <td class="p-3 flex items-center gap-2">
+              <span
+                class="w-3 h-3 rounded-full"
+                [style.background]="item.color"
+              ></span>
+              {{ item.name }}
+            </td>
+            <td class="text-center p-3 font-bold text-yellow-700">
+              {{ item.gold + item.silver + item.bronze }}
+            </td>
+            <td class="text-center p-3 font-semibold text-yellow-600">
+              {{ item.gold }}
+            </td>
+            <td class="text-center p-3 font-semibold text-gray-500">
+              {{ item.silver }}
+            </td>
+            <td class="text-center p-3 font-semibold text-orange-600">
+              {{ item.bronze }}
+            </td>
+          </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- Collapsible Categories / Events -->
+  <div class="space-y-4">
+    <div class="flex gap-2">
+      <button
+        (click)="expandAllCategories()"
+        class="px-3 py-1 text-sm border rounded bg-white hover:bg-gray-50"
+      >
+        Expand All
+      </button>
+      <button
+        (click)="collapseAllCategories()"
+        class="px-3 py-1 text-sm border rounded bg-white hover:bg-gray-50"
+      >
+        Collapse All
+      </button>
+    </div>
+    @for (cat of categories(); track cat.category) {
+    <div class="bg-white rounded-xl shadow border">
+      <button
+        type="button"
+        (click)="toggleCategory(cat.category)"
+        class="w-full flex items-center justify-between px-4 py-3 text-left font-semibold hover:bg-gray-50"
+      >
+        <span>{{ cat.category }}</span>
+        <span class="text-xs text-gray-500"
+          >{{ cat.events.length }} events</span
+        >
+      </button>
+      @if (isCategoryOpen(cat.category)) {
+      <div class="border-t">
+        @for (ev of cat.events; track ev.name) {
+        <div class="border-b last:border-b-0">
+          <button
+            type="button"
+            (click)="toggleEvent(ev.name)"
+            class="w-full flex items-center justify-between px-6 py-2 text-left text-sm hover:bg-gray-50"
+          >
+            <span class="font-medium">{{ ev.name }}</span>
+            <span class="text-xs text-gray-400"
+              >{{ ev.rows.length }} entries</span
+            >
+          </button>
+          @if (isEventOpen(ev.name)) {
+          <div class="px-6 pb-4 overflow-x-auto">
+            <table class="min-w-full text-xs">
+              <thead class="bg-gray-100 text-gray-600 uppercase">
+                <tr>
+                  <th class="p-2 text-left">Rank</th>
+                  <th class="p-2 text-left">College</th>
+                  <th class="p-2 text-center">🥇</th>
+                  <th class="p-2 text-center">🥈</th>
+                  <th class="p-2 text-center">🥉</th>
+                  <th class="p-2 text-center">Points</th>
+                </tr>
+              </thead>
+              <tbody>
+                @for (row of ev.rows; track row.collegeId) {
+                <tr class="border-t hover:bg-gray-50">
+                  <td class="p-2 font-semibold">{{ row.rank }}</td>
+                  <td class="p-2">{{ row.college }}</td>
+                  <td class="p-2 text-center text-yellow-600">
+                    {{ row.gold }}
+                  </td>
+                  <td class="p-2 text-center text-gray-500">
+                    {{ row.silver }}
+                  </td>
+                  <td class="p-2 text-center text-orange-600">
+                    {{ row.bronze }}
+                  </td>
+                  <td class="p-2 text-center font-semibold">
+                    {{ row.points }}
+                  </td>
+                </tr>
+                }
+              </tbody>
+            </table>
+          </div>
+          }
+        </div>
+        }
+      </div>
+      }
+    </div>
+    }
+  </div>
 </div>
