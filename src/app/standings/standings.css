@@ -13,6 +13,84 @@
   animation: fadeIn 0.6s ease;
 }
 
+/* Logo marquee */
+.logo-marquee {
+  position: relative;
+  overflow: hidden;
+  border-radius: 999px;
+  padding: 0.85rem 0; /* increased height */
+  margin-bottom: 1.5rem;
+  background: linear-gradient(90deg, #6366f11a, #8b5cf61a);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.55);
+}
+.logo-marquee:before,
+.logo-marquee:after {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 60px;
+  pointer-events: none;
+  z-index: 2;
+}
+.logo-marquee:before {
+  left: 0;
+  background: linear-gradient(90deg, #f8fafc, rgba(248, 250, 252, 0));
+}
+.logo-marquee:after {
+  right: 0;
+  background: linear-gradient(270deg, #f8fafc, rgba(248, 250, 252, 0));
+}
+.marquee-track {
+  display: flex;
+  width: max-content;
+  gap: 3rem; /* more spacing for larger logos */
+  will-change: transform;
+  animation: marqueeScroll 42s linear infinite; /* slow slightly for larger visuals */
+}
+.logo-item {
+  width: 80px;
+  height: 80px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.logo-item img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 50%;
+  box-shadow: 0 2px 6px -2px rgba(0, 0, 0, 0.2);
+  transition: transform 0.4s;
+}
+.logo-item img:hover {
+  transform: scale(1.15) rotate(-4deg);
+}
+@keyframes marqueeScroll {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+@media (max-width: 640px) {
+  .marquee-track {
+    animation-duration: 32s;
+    gap: 1.5rem;
+  }
+  .logo-item {
+    width: 64px;
+    height: 64px;
+  }
+  .marquee-track {
+    gap: 2.25rem;
+    animation-duration: 46s;
+  }
+}
+
 @keyframes fadeIn {
   from {
     opacity: 0;

@@ -9,6 +9,7 @@ export interface ICollege {
   events: { [key: string]: IEvent };
   color: string;
   id: string;
+  photo_url?: string; // logo / image URL
 }
 
 export interface IEvent {

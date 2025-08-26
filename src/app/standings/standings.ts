@@ -46,6 +46,7 @@ export class Standings {
     const zeroEntry = (c: ICollege) => ({
       id: (c as any).id,
       name: c.name,
+      photo_url: (c as any).photo_url,
       gold: 0,
       silver: 0,
       bronze: 0,
@@ -56,6 +57,7 @@ export class Standings {
       gold: number;
       silver: number;
       bronze: number;
+      photo_url?: string;
     }[];
     if (medals.length) {
       const medalMap = new Map<
@@ -66,6 +68,7 @@ export class Standings {
           gold: number;
           silver: number;
           bronze: number;
+          photo_url?: string;
         }
       >();
       medals.forEach((m) =>
@@ -75,6 +78,7 @@ export class Standings {
           gold: m.gold,
           silver: m.silver,
           bronze: m.bronze,
+          photo_url: (m as any).photo_url,
         })
       );
       // ensure every college appears
@@ -92,6 +96,7 @@ export class Standings {
           gold: number;
           silver: number;
           bronze: number;
+          photo_url?: string;
         }
       > = {};
       colleges.forEach((c) => {
@@ -134,6 +139,7 @@ export class Standings {
       silver: 0,
       bronze: 0,
       totalMedals: 0,
+      photo_url: (c as any).photo_url,
     });
     let list: {
       id: string;
@@ -142,6 +148,7 @@ export class Standings {
       silver: number;
       bronze: number;
       totalMedals: number;
+      photo_url?: string;
     }[] = [];
     if (medals.length) {
       const map = new Map<
@@ -153,6 +160,7 @@ export class Standings {
           silver: number;
           bronze: number;
           totalMedals: number;
+          photo_url?: string;
         }
       >();
       medals.forEach((m) =>
@@ -162,6 +170,7 @@ export class Standings {
           gold: m.gold,
           silver: m.silver,
           bronze: m.bronze,
+          photo_url: (m as any).photo_url,
           totalMedals: m.gold + m.silver + m.bronze,
         })
       );
@@ -179,6 +188,7 @@ export class Standings {
           gold: number;
           silver: number;
           bronze: number;
+          photo_url?: string;
         }
       > = {};
       colleges.forEach((c) => {
@@ -245,6 +255,7 @@ export class Standings {
         gold,
         silver,
         bronze,
+        photo_url: (c as any).photo_url,
       };
     });
     rows.sort((a, b) => {

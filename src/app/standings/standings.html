@@ -1,4 +1,18 @@
 <div class="max-w-6xl mx-auto p-6 space-y-14 page-shell">
+  <!-- Scrolling college logos banner -->
+  <div class="logo-marquee" aria-label="Participating Colleges">
+    <div class="marquee-track">
+      @for (c of colleges(); track c.id) { @if (c.photo_url) {
+      <div class="logo-item" title="{{c.name}}">
+        <img [src]="c.photo_url" alt="{{c.name}}" loading="lazy" />
+      </div>
+      } } @for (c of colleges(); track 'dup-' + c.id) { @if (c.photo_url) {
+      <div class="logo-item" title="{{c.name}}">
+        <img [src]="c.photo_url" alt="{{c.name}}" loading="lazy" />
+      </div>
+      } }
+    </div>
+  </div>
   <!-- Points-Based Overall Ranking -->
   <div class="space-y-3">
     <h1
@@ -43,7 +57,14 @@
                 class="w-3 h-3 rounded-full"
                 [style.background]="item.color"
               ></span>
-              {{ item.name }}
+              @if (item.photo_url) {
+              <img
+                [src]="item.photo_url"
+                alt="{{item.name}}"
+                class="w-7 h-7 rounded-full object-cover ring-2 ring-white shadow-sm"
+              />
+              }
+              <span>{{ item.name }}</span>
             </td>
             <td
               class="text-center p-3 font-bold text-indigo-700"
@@ -111,7 +132,14 @@
                 class="w-3 h-3 rounded-full"
                 [style.background]="item.color"
               ></span>
-              {{ item.name }}
+              @if (item.photo_url) {
+              <img
+                [src]="item.photo_url"
+                alt="{{item.name}}"
+                class="w-7 h-7 rounded-full object-cover ring-2 ring-white shadow-sm"
+              />
+              }
+              <span>{{ item.name }}</span>
             </td>
             <td
               class="text-center p-3 font-semibold text-yellow-600"
