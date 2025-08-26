@@ -34,6 +34,27 @@
   z-index: 1;
 }
 
+.hero-logo-wrap {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 1.25rem;
+}
+.hero-logo {
+  width: 950px;
+  object-fit: contain;
+  filter: drop-shadow(0 4px 10px rgba(0, 0, 0, 0.35));
+  animation: logoFloat 6s ease-in-out infinite;
+}
+@keyframes logoFloat {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-8px);
+  }
+}
+
 .hero-title {
   font-size: clamp(2.25rem, 5vw, 3.5rem);
   line-height: 1.05;
