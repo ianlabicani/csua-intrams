@@ -1,5 +1,5 @@
-<div class="max-w-5xl mx-auto p-6 space-y-10">
-  <div class="mt-6 flex flex-wrap gap-4 justify-center text-sm">
+<div class="max-w-6xl mx-auto p-6 space-y-14 page-shell">
+  <div class="mt-2 mb-4 toolbar">
     @if (!auth.currentUser) {
     <a
       routerLink="/login"
@@ -16,13 +16,18 @@
   </div>
 
   <!-- Points-Based Overall Ranking -->
-  <div>
-    <h1 class="text-3xl font-bold mb-6 text-center">
-      🏅 Overall Points Ranking
+  <div class="space-y-3">
+    <h1
+      class="text-4xl font-extrabold text-center gradient-title tracking-tight"
+    >
+      Overall Points Ranking
     </h1>
-    <div class="overflow-x-auto bg-white shadow-lg rounded-2xl">
-      <table class="min-w-full text-sm text-gray-700">
-        <thead class="bg-indigo-50 text-gray-800 text-xs uppercase">
+    <p class="text-center text-sm text-slate-500">
+      Total points from all scored events (5 / 3 / 1 system)
+    </p>
+    <div class="overflow-x-auto modern-card">
+      <table class="min-w-full text-sm text-gray-700 table-modern">
+        <thead class="bg-indigo-50/70 text-gray-800 text-xs uppercase">
           <tr>
             <th class="text-left p-3">Rank</th>
             <th class="text-left p-3">College</th>
@@ -40,7 +45,15 @@
             [class.bg-gray-50]="item.rank === 2"
             [class.bg-orange-50]="item.rank === 3"
           >
-            <td class="p-3 font-semibold text-lg">{{ item.rank }}</td>
+            <td class="p-3">
+              <span
+                class="rank-badge rank-{{item.rank}}"
+                [class.rank-1]="item.rank===1"
+                [class.rank-2]="item.rank===2"
+                [class.rank-3]="item.rank===3"
+                >{{ item.rank }}</span
+              >
+            </td>
             <td class="p-3 flex items-center gap-2">
               <span
                 class="w-3 h-3 rounded-full"
@@ -68,13 +81,16 @@
   </div>
 
   <!-- Medal Standings (by medal hierarchy) -->
-  <div>
-    <h2 class="text-3xl font-bold mb-6 text-center">
-      🏆 Medal Standings (Gold > Silver > Bronze)
+  <div class="space-y-3">
+    <h2 class="text-3xl font-bold text-center sub-gradient-title">
+      Medal Standings
     </h2>
-    <div class="overflow-x-auto bg-white shadow-lg rounded-2xl">
-      <table class="min-w-full text-sm text-gray-700">
-        <thead class="bg-gray-100 text-gray-800 text-xs uppercase">
+    <p class="text-center text-xs text-slate-500">
+      Sorted by 🥇 then 🥈 then 🥉
+    </p>
+    <div class="overflow-x-auto modern-card">
+      <table class="min-w-full text-sm text-gray-700 table-modern">
+        <thead class="bg-gray-100/70 text-gray-800 text-xs uppercase">
           <tr>
             <th class="text-left p-3">Rank</th>
             <th class="text-left p-3">College</th>
@@ -92,7 +108,15 @@
             [class.bg-gray-50]="item.rank === 2"
             [class.bg-orange-50]="item.rank === 3"
           >
-            <td class="p-3 font-semibold text-lg">{{ item.rank }}</td>
+            <td class="p-3">
+              <span
+                class="rank-badge rank-{{item.rank}}"
+                [class.rank-1]="item.rank===1"
+                [class.rank-2]="item.rank===2"
+                [class.rank-3]="item.rank===3"
+                >{{ item.rank }}</span
+              >
+            </td>
             <td class="p-3 flex items-center gap-2">
               <span
                 class="w-3 h-3 rounded-full"
@@ -119,56 +143,6 @@
     </div>
   </div>
 
-  <!-- Total Medals Ranking -->
-  <div>
-    <h2 class="text-3xl font-bold mb-6 text-center">🥇 Total Medals Ranking</h2>
-    <div class="overflow-x-auto bg-white shadow-lg rounded-2xl">
-      <table class="min-w-full text-sm text-gray-700">
-        <thead class="bg-yellow-50 text-gray-800 text-xs uppercase">
-          <tr>
-            <th class="text-left p-3">Rank</th>
-            <th class="text-left p-3">College</th>
-            <th class="p-3 text-center">Total Medals</th>
-            <th class="p-3 text-center">🥇</th>
-            <th class="p-3 text-center">🥈</th>
-            <th class="p-3 text-center">🥉</th>
-          </tr>
-        </thead>
-        <tbody>
-          @for (item of totalMedalsRows(); track item.id) {
-          <tr
-            class="border-t hover:bg-gray-50 transition"
-            [class.bg-yellow-50]="item.rank === 1"
-            [class.bg-gray-50]="item.rank === 2"
-            [class.bg-orange-50]="item.rank === 3"
-          >
-            <td class="p-3 font-semibold text-lg">{{ item.rank }}</td>
-            <td class="p-3 flex items-center gap-2">
-              <span
-                class="w-3 h-3 rounded-full"
-                [style.background]="item.color"
-              ></span>
-              {{ item.name }}
-            </td>
-            <td class="text-center p-3 font-bold text-yellow-700">
-              {{ item.gold + item.silver + item.bronze }}
-            </td>
-            <td class="text-center p-3 font-semibold text-yellow-600">
-              {{ item.gold }}
-            </td>
-            <td class="text-center p-3 font-semibold text-gray-500">
-              {{ item.silver }}
-            </td>
-            <td class="text-center p-3 font-semibold text-orange-600">
-              {{ item.bronze }}
-            </td>
-          </tr>
-          }
-        </tbody>
-      </table>
-    </div>
-  </div>
-
   <!-- Collapsible Categories / Events -->
   <div class="space-y-4">
     <div class="flex gap-2">
@@ -186,11 +160,11 @@
       </button>
     </div>
     @for (cat of categories(); track cat.category) {
-    <div class="bg-white rounded-xl shadow border">
+    <div class="modern-card">
       <button
         type="button"
         (click)="toggleCategory(cat.category)"
-        class="w-full flex items-center justify-between px-4 py-3 text-left font-semibold hover:bg-gray-50"
+        class="w-full flex items-center justify-between px-4 py-3 text-left font-semibold hover:bg-gray-50 category-header"
       >
         <span>{{ cat.category }}</span>
         <span class="text-xs text-gray-500"
@@ -200,11 +174,14 @@
       @if (isCategoryOpen(cat.category)) {
       <div class="border-t">
         @for (ev of cat.events; track ev.name) {
-        <div class="border-b last:border-b-0">
+        <div class="border-b last:border-b-0 event-row">
           <button
             type="button"
             (click)="toggleEvent(ev.name)"
-            class="w-full flex items-center justify-between px-6 py-2 text-left text-sm hover:bg-gray-50"
+            class="w-full flex items-center justify-between px-6 py-2 text-left text-sm hover:bg-gray-50 transition-colors border-l-4 border-transparent"
+            [class.bg-indigo-50]="isEventOpen(ev.name)"
+            [class.border-indigo-500]="isEventOpen(ev.name)"
+            [class.font-semibold]="isEventOpen(ev.name)"
           >
             <span class="font-medium">{{ ev.name }}</span>
             <span class="text-xs text-gray-400"
@@ -212,9 +189,9 @@
             >
           </button>
           @if (isEventOpen(ev.name)) {
-          <div class="px-6 pb-4 overflow-x-auto">
-            <table class="min-w-full text-xs">
-              <thead class="bg-gray-100 text-gray-600 uppercase">
+          <div class="px-6 pb-4 overflow-x-auto modern-card mt-2">
+            <table class="min-w-full text-xs table-modern">
+              <thead class="bg-gray-100/70 text-gray-600 uppercase">
                 <tr>
                   <th class="p-2 text-left">Rank</th>
                   <th class="p-2 text-left">College</th>
