@@ -1,0 +1,57 @@
+<div class="max-w-5xl mx-auto p-6">
+  <h1 class="text-3xl font-bold mb-6 text-center">🏅 Admin Medal Management</h1>
+
+  @if (medals().length > 0) {
+  <div class="overflow-x-auto shadow rounded-xl">
+    <table class="w-full border-collapse text-left">
+      <thead class="bg-gray-100 text-gray-700">
+        <tr>
+          <th class="px-6 py-3 font-semibold">College</th>
+          <th class="px-6 py-3 font-semibold text-center">🥇 Gold</th>
+          <th class="px-6 py-3 font-semibold text-center">🥈 Silver</th>
+          <th class="px-6 py-3 font-semibold text-center">🥉 Bronze</th>
+          <th class="px-6 py-3"></th>
+        </tr>
+      </thead>
+      <tbody class="divide-y divide-gray-200">
+        @for (medal of medals(); track medal.id) {
+        <tr class="hover:bg-gray-50 transition">
+          <td class="px-6 py-4 font-medium text-gray-800">{{ medal.name }}</td>
+          <td class="px-6 py-4 text-center">
+            <input
+              type="number"
+              [(ngModel)]="medal.gold"
+              class="w-20 border rounded-lg p-1 text-center focus:ring-2 focus:ring-yellow-400 focus:outline-none"
+            />
+          </td>
+          <td class="px-6 py-4 text-center">
+            <input
+              type="number"
+              [(ngModel)]="medal.silver"
+              class="w-20 border rounded-lg p-1 text-center focus:ring-2 focus:ring-gray-400 focus:outline-none"
+            />
+          </td>
+          <td class="px-6 py-4 text-center">
+            <input
+              type="number"
+              [(ngModel)]="medal.bronze"
+              class="w-20 border rounded-lg p-1 text-center focus:ring-2 focus:ring-orange-400 focus:outline-none"
+            />
+          </td>
+          <td class="px-6 py-4 text-right">
+            <button
+              (click)="saveCollege(medal)"
+              class="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-lg shadow transition"
+            >
+              Save
+            </button>
+          </td>
+        </tr>
+        }
+      </tbody>
+    </table>
+  </div>
+  } @else {
+  <p class="text-gray-500 text-center">⏳ Loading medals…</p>
+  }
+</div>

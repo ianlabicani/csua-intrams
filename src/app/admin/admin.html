@@ -1,0 +1,17 @@
+<div class="max-w-6xl mx-auto p-6">
+  <!-- Header -->
+  <div class="flex justify-between items-center mb-6">
+    <h1 class="text-3xl font-bold">⚙️ Admin Dashboard</h1>
+    <button
+      (click)="logout()"
+      class="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-lg shadow"
+    >
+      Logout
+    </button>
+  </div>
+
+  <!-- Main Content -->
+  <div class="bg-white shadow rounded-xl p-6">
+    <router-outlet></router-outlet>
+  </div>
+</div>

@@ -1,75 +1,60 @@
-import { Component } from '@angular/core';
+import { Component, computed, inject, signal } from '@angular/core';
+import { toSignal } from '@angular/core/rxjs-interop';
+import { Firestore, collection, collectionData } from '@angular/fire/firestore';
+import { RouterLink } from '@angular/router';
+import { IMedal } from '../admin/medals/medals';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-standings',
-  imports: [],
+  imports: [RouterLink],
   templateUrl: './standings.html',
   styleUrl: './standings.css',
 })
 export class Standings {
-  rows = [
-    {
-      rank: 1,
-      name: 'College of Criminal Justice Education',
-      gold: 3,
-      silver: 2,
-      bronze: 1,
-      total: 6,
-      color: '#ef4444',
-    },
-    {
-      rank: 2,
-      name: 'College of Business, Entrepreneurship and Accountancy',
-      gold: 1,
-      silver: 3,
-      bronze: 2,
-      total: 6,
-      color: '#3b82f6',
-    },
-    {
-      rank: 3,
-      name: 'College of Hospitality Management',
-      gold: 2,
-      silver: 2,
-      bronze: 2,
-      total: 6,
-      color: '#10b981',
-    },
-    {
-      rank: 4,
-      name: 'College of Industrial Technology',
-      gold: 0,
-      silver: 2,
-      bronze: 3,
-      total: 5,
-      color: '#6366f1',
-    },
-    {
-      rank: 5,
-      name: 'College of Information and Computing Sciences',
-      gold: 4,
-      silver: 1,
-      bronze: 2,
-      total: 7,
-      color: '#ec4899',
-    },
-    {
-      rank: 6,
-      name: 'College of Teacher Education',
-      gold: 1,
-      silver: 2,
-      bronze: 4,
-      total: 7,
-      color: '#14b8a6',
-    },
-    {
-      rank: 7,
-      name: 'College of Fisheries (and Aquatic Sciences)',
-      gold: 2,
-      silver: 1,
-      bronze: 3,
-      total: 6,
-      color: '#8b5cf6',
-    },
+  private firestore = inject(Firestore);
+
+  private medalsRef = collection(this.firestore, 'medals');
+  medals = signal<IMedal[]>([]);
+
+  ngOnInit(): void {
+    this.getMedals().subscribe((medals) => {
+      this.medals.set(medals);
+    });
+  }
+
+  getMedals(): Observable<IMedal[]> {
+    return collectionData(this.medalsRef, { idField: 'id' }) as Observable<
+      IMedal[]
+    >;
+  }
+  // Compute standings dynamically
+  rows = computed(() =>
+    [...this.medals()]
+      .map((m) => ({
+        ...m,
+        total: m.gold + m.silver + m.bronze,
+      }))
+      .sort((a, b) => {
+        if (b.gold !== a.gold) return b.gold - a.gold; // gold first
+        if (b.silver !== a.silver) return b.silver - a.silver; // then silver
+        return b.bronze - a.bronze; // then bronze
+      })
+      .map((m, i) => ({
+        ...m,
+        rank: i + 1,
+        // assign colors (optional, can be dynamic or fixed palette)
+        color: this.colors[i % this.colors.length],
+      }))
+  );
+
+  private colors = [
+    '#ef4444',
+    '#3b82f6',
+    '#10b981',
+    '#6366f1',
+    '#ec4899',
+    '#14b8a6',
+    '#8b5cf6',
   ];
 }
