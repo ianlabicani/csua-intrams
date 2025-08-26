@@ -1,4 +1,5 @@
 import { Component, computed, inject, signal } from '@angular/core';
+import { CountAnimDirective } from './count-anim.directive';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { Firestore, collection, collectionData } from '@angular/fire/firestore';
 import { RouterLink } from '@angular/router';
@@ -9,7 +10,7 @@ import { Auth } from '@angular/fire/auth';
 
 @Component({
   selector: 'app-standings',
-  imports: [RouterLink],
+  imports: [RouterLink, CountAnimDirective],
   templateUrl: './standings.html',
   styleUrl: './standings.css',
 })

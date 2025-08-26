@@ -61,18 +61,23 @@
               ></span>
               {{ item.name }}
             </td>
-            <td class="text-center p-3 font-bold text-indigo-700">
-              {{ item.points }}
-            </td>
-            <td class="text-center p-3 font-semibold text-yellow-600">
-              {{ item.gold }}
-            </td>
-            <td class="text-center p-3 font-semibold text-gray-500">
-              {{ item.silver }}
-            </td>
-            <td class="text-center p-3 font-semibold text-orange-600">
-              {{ item.bronze }}
-            </td>
+            <td
+              class="text-center p-3 font-bold text-indigo-700"
+              [countAnim]="item.points"
+              [countAnimDuration]="700"
+            ></td>
+            <td
+              class="text-center p-3 font-semibold text-yellow-600"
+              [countAnim]="item.gold"
+            ></td>
+            <td
+              class="text-center p-3 font-semibold text-gray-500"
+              [countAnim]="item.silver"
+            ></td>
+            <td
+              class="text-center p-3 font-semibold text-orange-600"
+              [countAnim]="item.bronze"
+            ></td>
           </tr>
           }
         </tbody>
@@ -124,18 +129,22 @@
               ></span>
               {{ item.name }}
             </td>
-            <td class="text-center p-3 font-semibold text-yellow-600">
-              {{ item.gold }}
-            </td>
-            <td class="text-center p-3 font-semibold text-gray-500">
-              {{ item.silver }}
-            </td>
-            <td class="text-center p-3 font-semibold text-orange-600">
-              {{ item.bronze }}
-            </td>
-            <td class="text-center p-3 font-bold text-indigo-700">
-              {{ item.total }}
-            </td>
+            <td
+              class="text-center p-3 font-semibold text-yellow-600"
+              [countAnim]="item.gold"
+            ></td>
+            <td
+              class="text-center p-3 font-semibold text-gray-500"
+              [countAnim]="item.silver"
+            ></td>
+            <td
+              class="text-center p-3 font-semibold text-orange-600"
+              [countAnim]="item.bronze"
+            ></td>
+            <td
+              class="text-center p-3 font-bold text-indigo-700"
+              [countAnim]="item.total"
+            ></td>
           </tr>
           }
         </tbody>
@@ -206,18 +215,22 @@
                 <tr class="border-t hover:bg-gray-50">
                   <td class="p-2 font-semibold">{{ row.rank }}</td>
                   <td class="p-2">{{ row.college }}</td>
-                  <td class="p-2 text-center text-yellow-600">
-                    {{ row.gold }}
-                  </td>
-                  <td class="p-2 text-center text-gray-500">
-                    {{ row.silver }}
-                  </td>
-                  <td class="p-2 text-center text-orange-600">
-                    {{ row.bronze }}
-                  </td>
-                  <td class="p-2 text-center font-semibold">
-                    {{ row.points }}
-                  </td>
+                  <td
+                    class="p-2 text-center text-yellow-600"
+                    [countAnim]="row.gold"
+                  ></td>
+                  <td
+                    class="p-2 text-center text-gray-500"
+                    [countAnim]="row.silver"
+                  ></td>
+                  <td
+                    class="p-2 text-center text-orange-600"
+                    [countAnim]="row.bronze"
+                  ></td>
+                  <td
+                    class="p-2 text-center font-semibold"
+                    [countAnim]="row.points"
+                  ></td>
                 </tr>
                 }
               </tbody>
