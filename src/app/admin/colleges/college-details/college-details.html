@@ -1,101 +1,96 @@
 @if (loading()) {
-<div class="text-gray-500 italic">Loading college...</div>
+<div class="loading-state">Loading college...</div>
 } @else if (error()) {
-<div class="text-red-600">{{ error() }}</div>
+<div class="error-state">{{ error() }}</div>
 } @else if (college()) { @let c = college();
-<div class="space-y-6" [style.--accent]="c?.color">
-  <div class="flex items-center gap-4">
-    <a
-      routerLink="/admin/colleges"
-      class="text-sm text-blue-600 hover:underline"
-      >← Back</a
-    >
-    <h2 class="text-2xl font-bold" [style.color]="c?.color">{{ c?.name }}</h2>
-    <span class="ml-auto text-sm bg-gray-100 px-3 py-1 rounded-full"
-      >Total Points: {{ totalPoints() }}</span
-    >
+<div class="details-shell" [style.--accent]="c?.color">
+  <div class="header-bar">
+    <a routerLink="/admin/colleges" class="back-link">← Back</a>
+    <div class="title-wrap">
+      <h2
+        class="title"
+        [style.background]="'linear-gradient(90deg,'+ (c?.color || '#6366f1') +', #8b5cf6)'"
+      >
+        {{ c?.name }}
+      </h2>
+      <span class="points-chip">Total Points: {{ totalPoints() }}</span>
+    </div>
   </div>
 
-  <form [formGroup]="form" (ngSubmit)="save()" class="space-y-4">
-    <div class="space-y-4">
-      @for (group of groupedEvents(); track group.category) {
-      <div class="border rounded-lg">
-        <button
-          type="button"
-          class="w-full flex items-center justify-between px-4 py-2 text-left font-semibold bg-gray-50 hover:bg-gray-100 rounded-t-lg"
-          (click)="toggleCategory(group.category)"
+  <form [formGroup]="form" (ngSubmit)="save()" class="groups-form">
+    @for (group of groupedEvents(); track group.category) {
+    <div class="category-panel" [class.expanded]="isExpanded(group.category)">
+      <button
+        type="button"
+        class="category-toggle"
+        (click)="toggleCategory(group.category)"
+        [attr.aria-expanded]="isExpanded(group.category)"
+      >
+        <span class="cat-name">{{ group.category }}</span>
+        <span class="meta">{{ group.events.length }} events</span>
+        <span class="chevron" [class.rotate]="isExpanded(group.category)"
+          >⌄</span
         >
-          <span>{{ group.category }}</span>
-          <span class="text-xs text-gray-500"
-            >{{ group.events.length }} events</span
-          >
-        </button>
-        @if (isExpanded(group.category)) {
-        <div class="grid md:grid-cols-2 gap-4 p-4 border-t bg-white/60">
-          @for (ev of group.events; track ev.key) {
-          <div
-            class="border rounded-lg p-4 transition-colors"
-            [ngClass]="{
-                      'bg-yellow-50 border-yellow-400': form.get(ev.key)?.value === 5,
-                      'bg-gray-100 border-gray-400': form.get(ev.key)?.value === 3,
-                      'bg-orange-100 border-orange-600': form.get(ev.key)?.value === 1,
-                      'bg-white border-gray-200': form.get(ev.key)?.value !== 5 && form.get(ev.key)?.value !== 3 && form.get(ev.key)?.value !== 1
+      </button>
+      @if (isExpanded(group.category)) {
+      <div class="event-grid">
+        @for (ev of group.events; track ev.key) {
+        <div
+          class="event-card"
+          [ngClass]="{
+                      'gold-card': form.get(ev.key)?.value === 5,
+                      'silver-card': form.get(ev.key)?.value === 3,
+                      'bronze-card': form.get(ev.key)?.value === 1,
+                      'empty-card': form.get(ev.key)?.value !== 5 && form.get(ev.key)?.value !== 3 && form.get(ev.key)?.value !== 1
                     }"
-          >
-            <h3 class="font-semibold mb-2">{{ ev.key }}</h3>
-            <label class="block text-sm font-medium mb-1">Points</label>
-            <input
-              type="number"
-              class="w-full border rounded px-3 py-2 bg-gray-100 cursor-not-allowed"
-              [formControlName]="ev.key"
-              readonly
-            />
-            <div class="flex gap-2 mt-3 text-xs flex-wrap">
-              <button
-                type="button"
-                (click)="setMedal(ev.key, 'gold')"
-                [class.opacity-40]="currentMedal(form.get(ev.key)?.value) !== 'gold'"
-                class="bg-yellow-500 hover:bg-yellow-600 text-white px-2 py-1 rounded"
-              >
-                Gold (5)
-              </button>
-              <button
-                type="button"
-                (click)="setMedal(ev.key, 'silver')"
-                [class.opacity-40]="currentMedal(form.get(ev.key)?.value) !== 'silver'"
-                class="bg-gray-400 hover:bg-gray-500 text-white px-2 py-1 rounded"
-              >
-                Silver (3)
-              </button>
-              <button
-                type="button"
-                (click)="setMedal(ev.key, 'bronze')"
-                [class.opacity-40]="currentMedal(form.get(ev.key)?.value) !== 'bronze'"
-                class="bg-amber-700 hover:bg-amber-800 text-white px-2 py-1 rounded"
-              >
-                Bronze (1)
-              </button>
-              <button
-                type="button"
-                (click)="setMedal(ev.key, 'none')"
-                [class.opacity-40]="currentMedal(form.get(ev.key)?.value) !== 'none'"
-                class="bg-neutral-300 hover:bg-neutral-400 text-neutral-800 px-2 py-1 rounded"
-              >
-                Clear
-              </button>
-            </div>
-            <p class="text-xs text-gray-500 mt-1">
-              Players: {{ ev.data.playerCount }}
-            </p>
+        >
+          <h3 class="event-title">{{ ev.key }}</h3>
+          <div class="points-field">
+            <label>Points</label>
+            <input type="number" [formControlName]="ev.key" readonly />
           </div>
-          }
+          <div class="medal-buttons">
+            <button
+              type="button"
+              (click)="setMedal(ev.key, 'gold')"
+              [class.inactive]="currentMedal(form.get(ev.key)?.value) !== 'gold'"
+              class="medal-btn gold"
+            >
+              🥇 5
+            </button>
+            <button
+              type="button"
+              (click)="setMedal(ev.key, 'silver')"
+              [class.inactive]="currentMedal(form.get(ev.key)?.value) !== 'silver'"
+              class="medal-btn silver"
+            >
+              🥈 3
+            </button>
+            <button
+              type="button"
+              (click)="setMedal(ev.key, 'bronze')"
+              [class.inactive]="currentMedal(form.get(ev.key)?.value) !== 'bronze'"
+              class="medal-btn bronze"
+            >
+              🥉 1
+            </button>
+            <button
+              type="button"
+              (click)="setMedal(ev.key, 'none')"
+              [class.inactive]="currentMedal(form.get(ev.key)?.value) !== 'none'"
+              class="medal-btn clear"
+            >
+              ✕
+            </button>
+          </div>
+          <p class="players">Players: {{ ev.data.playerCount }}</p>
         </div>
         }
       </div>
       }
     </div>
-    @if (saving()) {
-    <div class="text-sm text-gray-500">Saving...</div>
+    } @if (saving()) {
+    <div class="saving">Saving...</div>
     }
   </form>
 </div>

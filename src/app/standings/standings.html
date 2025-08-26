@@ -24,7 +24,7 @@
       Total points from all scored events (5 / 3 / 1 system)
     </p>
     <div class="overflow-x-auto modern-card">
-      <table class="min-w-full text-sm text-gray-700 table-modern">
+      <table class="min-w-full text-sm text-gray-700 table-modern stack-mobile">
         <thead class="bg-indigo-50/70 text-gray-800 text-xs uppercase">
           <tr>
             <th class="text-left p-3">Rank</th>
@@ -43,7 +43,7 @@
             [class.bg-gray-50]="item.rank === 2 && item.points > 0"
             [class.bg-orange-50]="item.rank === 3 && item.points > 0"
           >
-            <td class="p-3">
+            <td class="p-3" data-label="Rank">
               <span
                 class="rank-badge rank-{{item.rank}}"
                 [class.rank-1]="item.rank===1"
@@ -52,7 +52,7 @@
                 >{{ item.rank }}</span
               >
             </td>
-            <td class="p-3 flex items-center gap-2">
+            <td class="p-3 flex items-center gap-2" data-label="College">
               @if (item.photo_url) {
               <img
                 [src]="item.photo_url"
@@ -66,18 +66,22 @@
               class="text-center p-3 font-bold text-indigo-700"
               [countAnim]="item.points"
               [countAnimDuration]="700"
+              data-label="Points"
             ></td>
             <td
               class="text-center p-3 font-semibold text-yellow-600"
               [countAnim]="item.gold"
+              data-label="Gold"
             ></td>
             <td
               class="text-center p-3 font-semibold text-gray-500"
               [countAnim]="item.silver"
+              data-label="Silver"
             ></td>
             <td
               class="text-center p-3 font-semibold text-orange-600"
               [countAnim]="item.bronze"
+              data-label="Bronze"
             ></td>
           </tr>
           }
@@ -95,7 +99,7 @@
       Sorted by 🥇 then 🥈 then 🥉
     </p>
     <div class="overflow-x-auto modern-card">
-      <table class="min-w-full text-sm text-gray-700 table-modern">
+      <table class="min-w-full text-sm text-gray-700 table-modern stack-mobile">
         <thead class="bg-gray-100/70 text-gray-800 text-xs uppercase">
           <tr>
             <th class="text-left p-3">Rank</th>
@@ -114,7 +118,7 @@
             [class.bg-gray-50]="item.rank === 2 && (item.gold || item.silver || item.bronze) > 0"
             [class.bg-orange-50]="item.rank === 3 && (item.gold || item.silver || item.bronze) > 0"
           >
-            <td class="p-3">
+            <td class="p-3" data-label="Rank">
               <span
                 class="rank-badge rank-{{item.rank}}"
                 [class.rank-1]="item.rank===1"
@@ -123,7 +127,7 @@
                 >{{ item.rank }}</span
               >
             </td>
-            <td class="p-3 flex items-center gap-2">
+            <td class="p-3 flex items-center gap-2" data-label="College">
               @if (item.photo_url) {
               <img
                 [src]="item.photo_url"
@@ -136,18 +140,22 @@
             <td
               class="text-center p-3 font-semibold text-yellow-600"
               [countAnim]="item.gold"
+              data-label="Gold"
             ></td>
             <td
               class="text-center p-3 font-semibold text-gray-500"
               [countAnim]="item.silver"
+              data-label="Silver"
             ></td>
             <td
               class="text-center p-3 font-semibold text-orange-600"
               [countAnim]="item.bronze"
+              data-label="Bronze"
             ></td>
             <td
               class="text-center p-3 font-bold text-indigo-700"
               [countAnim]="item.total"
+              data-label="Total"
             ></td>
           </tr>
           }
@@ -203,7 +211,7 @@
           </button>
           @if (isEventOpen(ev.name)) {
           <div class="px-6 pb-4 overflow-x-auto modern-card mt-2">
-            <table class="min-w-full text-xs table-modern">
+            <table class="min-w-full text-xs table-modern stack-mobile">
               <thead class="bg-gray-100/70 text-gray-600 uppercase">
                 <tr>
                   <th class="p-2 text-left">Rank</th>
@@ -217,23 +225,29 @@
               <tbody>
                 @for (row of ev.rows; track row.collegeId) {
                 <tr class="border-t hover:bg-gray-50">
-                  <td class="p-2 font-semibold">{{ row.rank }}</td>
-                  <td class="p-2">{{ row.college }}</td>
+                  <td class="p-2 font-semibold" data-label="Rank">
+                    {{ row.rank }}
+                  </td>
+                  <td class="p-2" data-label="College">{{ row.college }}</td>
                   <td
                     class="p-2 text-center text-yellow-600"
                     [countAnim]="row.gold"
+                    data-label="Gold"
                   ></td>
                   <td
                     class="p-2 text-center text-gray-500"
                     [countAnim]="row.silver"
+                    data-label="Silver"
                   ></td>
                   <td
                     class="p-2 text-center text-orange-600"
                     [countAnim]="row.bronze"
+                    data-label="Bronze"
                   ></td>
                   <td
                     class="p-2 text-center font-semibold"
                     [countAnim]="row.points"
+                    data-label="Points"
                   ></td>
                 </tr>
                 }

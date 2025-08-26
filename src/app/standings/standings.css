@@ -309,4 +309,89 @@ tbody tr:hover {
   .hide-sm {
     display: none;
   }
+
+  /* Stack tables into cards */
+  .stack-mobile thead {
+    display: none;
+  }
+  .stack-mobile tbody tr {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    padding: 0.5rem 0.75rem;
+    margin-bottom: 0.85rem;
+    border: 1px solid #e2e8f0;
+    border-radius: 0.9rem;
+    background: linear-gradient(145deg, #ffffff, #f1f5f9);
+    box-shadow: 0 4px 12px -4px rgba(0, 0, 0, 0.08);
+  }
+  .stack-mobile tbody tr:last-child {
+    margin-bottom: 0;
+  }
+  .stack-mobile tbody tr td {
+    display: flex;
+    align-items: center;
+    gap: 0.35rem;
+    padding: 0.4rem 0.35rem !important;
+    font-size: 0.75rem;
+    border: none;
+  }
+  .stack-mobile tbody tr td[data-label]::before {
+    content: attr(data-label);
+    font-size: 0.6rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: #64748b;
+    background: #eef2ff;
+    padding: 0.15rem 0.4rem;
+    border-radius: 6px;
+  }
+  .stack-mobile tbody tr td[data-label="College"]::before,
+  .stack-mobile tbody tr td[data-label="Rank"]::before {
+    background: #f1f5f9;
+  }
+  .stack-mobile tbody tr td:first-child {
+    grid-column: 1 / 2;
+  }
+  .stack-mobile tbody tr td[data-label="College"] {
+    grid-column: 1 / -1;
+    font-weight: 600;
+    padding-top: 0.6rem !important;
+  }
+  .stack-mobile tbody tr td[data-label="College"] img {
+    width: 2rem;
+    height: 2rem;
+  }
+  .stack-mobile tbody tr td[data-label="Points"],
+  .stack-mobile tbody tr td[data-label="Total"] {
+    font-weight: 700;
+    color: #4338ca;
+  }
+  .modern-card {
+    padding: 0.75rem 0.6rem;
+  }
+  .logo-marquee {
+    padding: 0.65rem 0;
+  }
+}
+
+/* Medium breakpoint improvements */
+@media (min-width: 641px) and (max-width: 900px) {
+  .page-shell {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+  .modern-card {
+    border-radius: 1rem;
+  }
+  .stack-mobile tbody tr td {
+    font-size: 0.8rem;
+  }
+}
+
+/* Larger screen enhancements */
+@media (min-width: 1000px) {
+  .table-modern tbody tr:hover {
+    transform: translateY(-2px);
+  }
 }
