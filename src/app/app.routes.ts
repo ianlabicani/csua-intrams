@@ -20,4 +20,8 @@ export const routes: Routes = [
     loadComponent: () => import('./admin/admin').then((m) => m.Admin),
     loadChildren: () => import('./admin/admin.routes').then((m) => m.routes),
   },
+  {
+    path: '**',
+    redirectTo: 'standings',
+  },
 ];
