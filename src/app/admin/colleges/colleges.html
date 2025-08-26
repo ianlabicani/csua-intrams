@@ -1,36 +1,39 @@
-<h2 class="text-2xl font-semibold mb-4">Colleges</h2>
+<h2 class="text-3xl font-extrabold mb-6 text-gray-800">Colleges</h2>
 
 @if (!(colleges().length)) {
-<div class="text-gray-500 italic">Loading or no colleges yet...</div>
+<div class="text-gray-400 italic text-lg animate-pulse">
+  Loading or no colleges yet...
+</div>
 } @else {
 
-<div class="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
+<div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6 auto-rows-fr">
   @for (c of colleges(); track $index) {
 
   <a
     [routerLink]="['/admin/colleges', c.id]"
-    class="block rounded-lg border p-4 hover:shadow transition group"
+    class="group rounded-2xl border border-gray-200 p-6 bg-white hover:shadow-xl transition-transform transform hover:-translate-y-1 hover:scale-105 h-full flex flex-col"
     [style.borderColor]="c.color"
   >
-    <div class="flex justify-between items-start mb-2">
-      <h3
-        class="text-lg font-bold group-hover:underline"
-        [style.color]="c.color"
-      >
+    <div class="flex justify-between items-start mb-4">
+      <h3 class="text-xl font-semibold" [style.color]="c.color">
         {{ c.name }}
       </h3>
       <span
-        class="text-xs px-2 py-1 rounded font-semibold tracking-wide"
-        [style.background]="c.color + '22'"
-        [style.color]="c.color"
+        class="text-xs font-bold px-3 py-1 rounded-full tracking-wide"
+        [style.background]="c.color"
+        [style.color]="'white'"
         [title]="c.id"
       >
         {{ acronym(c.name) }}
       </span>
     </div>
-    <div class="text-sm text-gray-600">Events: {{ eventCount(c) }}</div>
-    <div class="mt-1 font-medium">Total Points: {{ totalPoints(c) }}</div>
+
+    <div class="flex-1 flex items-end justify-between mt-4 pt-">
+      <span class="text-gray-600 font-medium">Total Points:</span>
+      <span class="text-gray-900 font-bold text-lg">{{ totalPoints(c) }}</span>
+    </div>
   </a>
+
   }
 </div>
 

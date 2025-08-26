@@ -1,0 +1,11 @@
+/* Ensure all college cards have equal height */
+.col-card {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+/* Fallback if auto-rows-fr utility not available */
+.col-card .mt-auto {
+  margin-top: auto;
+}

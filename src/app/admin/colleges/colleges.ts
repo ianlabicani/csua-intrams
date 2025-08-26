@@ -42,10 +42,6 @@ export class Colleges {
     >;
   }
 
-  eventCount(college: ICollege): number {
-    return college.events ? Object.keys(college.events).length : 0;
-  }
-
   totalPoints(college: ICollege): number {
     if (!college.events) return 0;
     return Object.values(college.events).reduce(

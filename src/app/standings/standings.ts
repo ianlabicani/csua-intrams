@@ -354,23 +354,26 @@ export class Standings {
   categories = computed(() => {
     const map: Record<string, Record<string, any[]>> = {};
     this.colleges().forEach((c) => {
-      Object.entries(c.events || {}).forEach(([eventKey, ev]: [string, any]) => {
-        const points = (ev && ev.points) || 0;
-        // Skip unscored events (no points yet)
-        if (points <= 0) return;
-        const category = this.deriveCategory(eventKey);
-        if (!map[category]) map[category] = {};
-        if (!map[category][eventKey]) map[category][eventKey] = [];
-        map[category][eventKey].push({
-          event: eventKey,
-          college: c.name,
-          collegeId: c.id,
-          points,
-          gold: points === 5 ? 1 : 0,
-          silver: points === 3 ? 1 : 0,
-          bronze: points === 1 ? 1 : 0,
-        });
-      });
+      Object.entries(c.events || {}).forEach(
+        ([eventKey, ev]: [string, any]) => {
+          const points = (ev && ev.points) || 0;
+          // Skip unscored events (no points yet)
+          if (points <= 0) return;
+          const category = this.deriveCategory(eventKey);
+          if (!map[category]) map[category] = {};
+          if (!map[category][eventKey]) map[category][eventKey] = [];
+          map[category][eventKey].push({
+            event: eventKey,
+            college: c.name,
+            collegeId: c.id,
+            points,
+            gold: points === 5 ? 1 : 0,
+            silver: points === 3 ? 1 : 0,
+            bronze: points === 1 ? 1 : 0,
+            color: (c as any).color || '',
+          });
+        }
+      );
     });
     return Object.entries(map)
       .map(([category, eventsObj]) => ({
@@ -380,7 +383,8 @@ export class Standings {
             name: eventName,
             rows: (rows as any[])
               .sort(
-                (a, b) => b.points - a.points || a.college.localeCompare(b.college)
+                (a, b) =>
+                  b.points - a.points || a.college.localeCompare(b.college)
               )
               .map((r, i) => ({ ...r, rank: i + 1 })),
           }))
@@ -418,5 +422,19 @@ export class Standings {
   }
   collapseAllCategories() {
     this.categoryExpanded.set(new Set());
+  }
+
+  // Color palette for category headers
+  private categoryColors = [
+    '#6366f1',
+    '#8b5cf6',
+    '#ec4899',
+    '#14b8a6',
+    '#f59e0b',
+    '#0ea5e9',
+    '#10b981',
+  ];
+  colorForIndex(i: number) {
+    return this.categoryColors[i % this.categoryColors.length];
   }
 }
