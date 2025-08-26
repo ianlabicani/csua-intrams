@@ -182,6 +182,7 @@
     <p class="text-center text-sm text-slate-500">
       View results from completed competitions by category
     </p>
+    @if (categories().length) {
     <div class="flex gap-2">
       <button
         (click)="expandAllCategories()"
@@ -196,7 +197,8 @@
         Collapse All
       </button>
     </div>
-    @for (cat of categories(); track cat.category; let i = $index) {
+
+    } @for (cat of categories(); track cat.category; let i = $index) {
     <div class="modern-card" [style.--cat-color]="colorForIndex(i)">
       <button
         type="button"
@@ -280,6 +282,14 @@
         }
       </div>
       }
+    </div>
+    } @empty {
+    <div class="p-8 text-center text-gray-500 space-y-2">
+      <h3 class="text-lg font-medium text-gray-700">No Events Recorded Yet</h3>
+      <p class="text-sm">
+        Competition results will appear here once events are completed and
+        scores are recorded.
+      </p>
     </div>
     }
   </div>
