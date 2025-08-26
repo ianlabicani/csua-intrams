@@ -29,10 +29,10 @@
           <tr>
             <th class="text-left p-3">Rank</th>
             <th class="text-left p-3">College</th>
-            <th class="p-3 text-center">Total Points</th>
             <th class="p-3 text-center">🥇</th>
             <th class="p-3 text-center">🥈</th>
             <th class="p-3 text-center">🥉</th>
+            <th class="p-3 text-center">Total Points</th>
           </tr>
         </thead>
         <tbody>
@@ -40,7 +40,7 @@
           <tr
             class="border-t hover:bg-gray-50 transition"
             [class.bg-yellow-50]="item.rank === 1 && item.points > 0"
-            [class.bg-gray-50]="item.rank === 2 && item.points > 0"
+            [class.rank-row-2]="item.rank === 2 && item.points > 0"
             [class.bg-orange-50]="item.rank === 3 && item.points > 0"
           >
             <td class="p-3" data-label="Rank">
@@ -62,12 +62,7 @@
               }
               <span>{{ item.name }}</span>
             </td>
-            <td
-              class="text-center p-3 font-bold text-indigo-700"
-              [countAnim]="item.points"
-              [countAnimDuration]="700"
-              data-label="Points"
-            ></td>
+
             <td
               class="text-center p-3 font-semibold text-yellow-600"
               [countAnim]="item.gold"
@@ -82,6 +77,12 @@
               class="text-center p-3 font-semibold text-orange-600"
               [countAnim]="item.bronze"
               data-label="Bronze"
+            ></td>
+            <td
+              class="text-center p-3 font-bold text-indigo-700"
+              [countAnim]="item.points"
+              [countAnimDuration]="700"
+              data-label="Points"
             ></td>
           </tr>
           }
@@ -115,7 +116,7 @@
           <tr
             class="border-t hover:bg-gray-50 transition"
             [class.bg-yellow-50]="item.rank === 1 && (item.gold || item.silver || item.bronze) > 0"
-            [class.bg-gray-50]="item.rank === 2 && (item.gold || item.silver || item.bronze) > 0"
+            [class.rank-row-2]="item.rank === 2 && (item.gold || item.silver || item.bronze) > 0"
             [class.bg-orange-50]="item.rank === 3 && (item.gold || item.silver || item.bronze) > 0"
           >
             <td class="p-3" data-label="Rank">
@@ -166,6 +167,12 @@
 
   <!-- Collapsible Categories / Events -->
   <div class="space-y-4">
+    <h2 class="text-3xl font-bold text-center sub-gradient-title">
+      Finished Events
+    </h2>
+    <p class="text-center text-sm text-slate-500">
+      View results from completed competitions by category
+    </p>
     <div class="flex gap-2">
       <button
         (click)="expandAllCategories()"

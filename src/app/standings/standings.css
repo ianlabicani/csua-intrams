@@ -147,6 +147,26 @@ tbody tr:hover {
   box-shadow: inset 0 0 0 9999px rgba(99, 102, 241, 0.03);
 }
 
+/* Distinct second place highlight */
+.rank-row-2 {
+  background: linear-gradient(90deg, #f1f5f9, #e2e8f0) !important;
+  box-shadow: inset 0 0 0 9999px rgba(148, 163, 184, 0.08);
+  position: relative;
+}
+.rank-row-2::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(
+    135deg,
+    rgba(203, 213, 225, 0.35) 0%,
+    rgba(148, 163, 184, 0.15) 60%,
+    rgba(255, 255, 255, 0) 100%
+  );
+  mix-blend-mode: overlay;
+}
+
 .rank-badge {
   display: inline-flex;
   align-items: center;
