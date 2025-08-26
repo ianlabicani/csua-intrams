@@ -52,4 +52,15 @@ export class Colleges {
       0
     );
   }
+
+  // Build an acronym from a snake_case id, skipping common stop words (e.g. 'of')
+  acronym(id: string): string {
+    if (!id) return '';
+    const stop = new Set(['of', 'the', 'and', 'for', 'in', 'on', 'at', 'de']);
+    return id
+      .split(/[_\s]+/)
+      .filter((part) => part && !stop.has(part.toLowerCase()))
+      .map((part) => part[0].toUpperCase())
+      .join('');
+  }
 }

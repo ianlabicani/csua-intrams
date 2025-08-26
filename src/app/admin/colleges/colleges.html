@@ -1,33 +1,37 @@
 <h2 class="text-2xl font-semibold mb-4">Colleges</h2>
-<div *ngIf="!(colleges()?.length); else list" class="text-gray-500 italic">
-  Loading or no colleges yet...
+
+@if (!(colleges().length)) {
+<div class="text-gray-500 italic">Loading or no colleges yet...</div>
+} @else {
+
+<div class="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
+  @for (c of colleges(); track $index) {
+
+  <a
+    [routerLink]="['/admin/colleges', c.id]"
+    class="block rounded-lg border p-4 hover:shadow transition group"
+    [style.borderColor]="c.color"
+  >
+    <div class="flex justify-between items-start mb-2">
+      <h3
+        class="text-lg font-bold group-hover:underline"
+        [style.color]="c.color"
+      >
+        {{ c.name }}
+      </h3>
+      <span
+        class="text-xs px-2 py-1 rounded font-semibold tracking-wide"
+        [style.background]="c.color + '22'"
+        [style.color]="c.color"
+        [title]="c.id"
+      >
+        {{ acronym(c.name) }}
+      </span>
+    </div>
+    <div class="text-sm text-gray-600">Events: {{ eventCount(c) }}</div>
+    <div class="mt-1 font-medium">Total Points: {{ totalPoints(c) }}</div>
+  </a>
+  }
 </div>
 
-<ng-template #list>
-  <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
-    <a
-      *ngFor="let c of colleges()"
-      [routerLink]="['/admin/colleges', c.id]"
-      class="block rounded-lg border p-4 hover:shadow transition group"
-      [style.borderColor]="c.color"
-    >
-      <div class="flex justify-between items-start mb-2">
-        <h3
-          class="text-lg font-bold group-hover:underline"
-          [style.color]="c.color"
-        >
-          {{ c.name }}
-        </h3>
-        <span
-          class="text-xs px-2 py-1 rounded"
-          [style.background]="c.color + '22'"
-          [style.color]="c.color"
-        >
-          {{ c.id }}
-        </span>
-      </div>
-      <div class="text-sm text-gray-600">Events: {{ eventCount(c) }}</div>
-      <div class="mt-1 font-medium">Total Points: {{ totalPoints(c) }}</div>
-    </a>
-  </div>
-</ng-template>
+}
