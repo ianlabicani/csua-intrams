@@ -18,17 +18,6 @@ export const routes: Routes = [
   {
     path: 'admin',
     loadComponent: () => import('./admin/admin').then((m) => m.Admin),
-    children: [
-      {
-        path: '',
-        redirectTo: 'medals',
-        pathMatch: 'full',
-      },
-      {
-        path: 'medals',
-        loadComponent: () =>
-          import('./admin/medals/medals').then((m) => m.Medals),
-      },
-    ],
+    loadChildren: () => import('./admin/admin.routes').then((m) => m.routes),
   },
 ];
