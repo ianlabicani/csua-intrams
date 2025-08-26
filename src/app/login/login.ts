@@ -46,13 +46,4 @@ export class Login {
       }
     }
   }
-
-  async onGoogleLogin() {
-    try {
-      const provider = new GoogleAuthProvider();
-      const result = await signInWithPopup(this.auth, provider);
-    } catch (err) {
-      console.error('❌ Google login failed:', err);
-    }
-  }
 }
