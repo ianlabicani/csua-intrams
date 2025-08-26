@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import {
   Auth,
@@ -7,12 +7,12 @@ import {
   signInWithPopup,
   authState,
 } from '@angular/fire/auth';
-import { Router } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [ReactiveFormsModule],
+  imports: [ReactiveFormsModule, RouterLink],
   templateUrl: './login.html',
   styleUrl: './login.css',
 })
@@ -28,10 +28,13 @@ export class Login {
     password: ['', Validators.required],
   });
 
+  authError = signal<string | null>(null);
+
   async onLogin() {
     if (this.loginForm.valid) {
       const { email, password } = this.loginForm.value;
       try {
+        this.authError.set(null);
         const userCredential = await signInWithEmailAndPassword(
           this.auth,
           email!,
@@ -42,8 +45,28 @@ export class Login {
           this.router.navigate(['/admin']);
         }
       } catch (err) {
-        console.error('❌ Login failed:', err);
+        const code = (err as any)?.code as string | undefined;
+        this.authError.set(this.messageForCode(code));
       }
+    }
+  }
+
+  private messageForCode(code?: string): string {
+    switch (code) {
+      case 'auth/invalid-email':
+        return 'That email address is not valid.';
+      case 'auth/user-disabled':
+        return 'This account has been disabled. Contact an administrator.';
+      case 'auth/user-not-found':
+      case 'auth/wrong-password':
+      case 'auth/invalid-credential':
+        return 'Incorrect email or password.';
+      case 'auth/too-many-requests':
+        return 'Too many failed attempts. Please wait and try again later.';
+      case 'auth/network-request-failed':
+        return 'Network error. Check your connection and retry.';
+      default:
+        return 'Login failed. Please try again.';
     }
   }
 }
