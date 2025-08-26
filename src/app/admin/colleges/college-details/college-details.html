@@ -5,10 +5,10 @@
 } @else if (college()) { @let c = college();
 <div class="details-shell" [style.--accent]="c?.color">
   <div class="header-bar">
-    <a routerLink="/admin/colleges" class="back-link">← Back</a>
+    <a routerLink="/admin/colleges" class="back-link">Back</a>
     <div class="title-wrap">
       <h2
-        class="title"
+        class="title has-gradient"
         [style.background]="'linear-gradient(90deg,'+ (c?.color || '#6366f1') +', #8b5cf6)'"
       >
         {{ c?.name }}

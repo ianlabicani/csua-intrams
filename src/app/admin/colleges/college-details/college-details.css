@@ -106,10 +106,16 @@
   font-weight: 800;
   line-height: 1.1;
   margin: 0;
+  letter-spacing: 0.5px;
+  color: #1e293b; /* fallback visible */
+  position: relative;
+  width: 100%;
+  padding: 0.5rem;
+}
+.title.has-gradient {
   background-clip: text;
   -webkit-background-clip: text;
-  color: transparent;
-  letter-spacing: 0.5px;
+  color: white;
 }
 
 .points-chip {
@@ -161,6 +167,8 @@
   font-size: 0.9rem;
   position: relative;
   background: linear-gradient(90deg, #f8fafc, #eef2ff);
+  width: 100%;
+  box-sizing: border-box;
 }
 .category-toggle:hover {
   background: linear-gradient(90deg, #f1f5f9, #e2e8f0);
@@ -352,6 +360,9 @@
   .category-toggle {
     padding: 0.85rem 0.9rem;
     font-size: 0.8rem;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem 0.75rem;
   }
 }
 
