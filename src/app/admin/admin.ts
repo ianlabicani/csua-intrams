@@ -1,10 +1,15 @@
 import { Component, inject } from '@angular/core';
 import { Auth, signOut } from '@angular/fire/auth';
-import { Router, RouterOutlet } from '@angular/router';
+import {
+  Router,
+  RouterOutlet,
+  RouterLink,
+  RouterLinkActive,
+} from '@angular/router';
 
 @Component({
   selector: 'app-admin',
-  imports: [RouterOutlet],
+  imports: [RouterOutlet, RouterLink, RouterLinkActive],
   templateUrl: './admin.html',
   styleUrl: './admin.css',
 })
@@ -14,7 +19,6 @@ export class Admin {
 
   async logout() {
     await signOut(this.auth);
-    console.log('✅ Logged out');
     // Optionally route to login page
     this.router.navigate(['/standings']);
   }

@@ -1,7 +1,15 @@
 <div class="max-w-6xl mx-auto p-6">
   <!-- Header -->
   <div class="flex justify-between items-center mb-6">
-    <h1 class="text-3xl font-bold">⚙️ Admin Dashboard</h1>
+    <div class="flex items-center gap-6">
+      <h1 class="text-3xl font-bold">⚙️ Admin Dashboard</h1>
+      <a
+        routerLink="/standings"
+        routerLinkActive="font-semibold"
+        class="text-sm text-blue-600 hover:underline"
+        >View Standings</a
+      >
+    </div>
     <button
       (click)="logout()"
       class="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-lg shadow"

@@ -31,7 +31,6 @@ export class Colleges {
   ngOnInit(): void {
     this.getColleges().subscribe((colleges) => {
       this.colleges.set(colleges);
-      console.log(colleges);
     });
   }
 

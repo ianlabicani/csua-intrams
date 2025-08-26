@@ -4,6 +4,7 @@ import { Firestore, collection, collectionData } from '@angular/fire/firestore';
 import { RouterLink } from '@angular/router';
 import { IMedal } from '../admin/medals/medals';
 import { Observable } from 'rxjs';
+import { Auth } from '@angular/fire/auth';
 
 @Component({
   selector: 'app-standings',
@@ -13,7 +14,7 @@ import { Observable } from 'rxjs';
 })
 export class Standings {
   private firestore = inject(Firestore);
-
+  auth = inject(Auth);
   private medalsRef = collection(this.firestore, 'medals');
   medals = signal<IMedal[]>([]);
 

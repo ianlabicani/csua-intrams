@@ -45,8 +45,6 @@ export class Medals implements OnInit {
   }
 
   async saveCollege(college: any) {
-    console.log('Saving medals for:', college);
-
     const docRef = doc(this.firestore, 'medals', college.id);
 
     try {
@@ -55,7 +53,6 @@ export class Medals implements OnInit {
         silver: college.silver,
         bronze: college.bronze,
       });
-      console.log('✅ Medals updated for', college.name);
     } catch (e: any) {
       // If document doesn’t exist, create it
       await setDoc(docRef, {

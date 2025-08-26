@@ -28,16 +28,6 @@ export class Login {
     password: ['', Validators.required],
   });
 
-  constructor() {
-    this.authState$.subscribe((user) => {
-      if (user) {
-        console.log('User is logged in:', user);
-      } else {
-        console.log('User is logged out');
-      }
-    });
-  }
-
   async onLogin() {
     if (this.loginForm.valid) {
       const { email, password } = this.loginForm.value;
@@ -61,7 +51,6 @@ export class Login {
     try {
       const provider = new GoogleAuthProvider();
       const result = await signInWithPopup(this.auth, provider);
-      console.log('✅ Google login success:', result.user);
     } catch (err) {
       console.error('❌ Google login failed:', err);
     }

@@ -140,7 +140,10 @@ export class CollegeDetails {
       groups[category].push({ key, data });
     });
     return Object.entries(groups)
-      .map(([category, events]) => ({ category, events }))
+      .map(([category, events]) => ({
+        category,
+        events: [...events].sort((a, b) => a.key.localeCompare(b.key)),
+      }))
       .sort((a, b) => a.category.localeCompare(b.category));
   }
 
