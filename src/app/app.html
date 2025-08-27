@@ -14,10 +14,108 @@
       Live standings, medals, and event performance tracking for the campus
       intramural games.
     </p>
+
+    <div
+      class="hero-actions mt-5 flex flex-wrap items-center gap-3 justify-center"
+    >
+      <a
+        routerLink="/standings"
+        routerLinkActive="ring-2 ring-offset-2 ring-amber-400"
+        class="inline-flex items-center gap-2 text-xs font-semibold tracking-wide uppercase rounded-full px-5 py-2.5 bg-gradient-to-r from-amber-500 via-orange-500 to-yellow-400 text-white shadow hover:shadow-lg transition-all duration-300 hover:from-amber-600 hover:to-yellow-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-amber-500"
+        aria-label="View rankings"
+      >
+        <svg
+          class="w-4 h-4"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          aria-hidden="true"
+        >
+          <path d="M3 17h4V7H3z" />
+          <path d="M10 17h4V3h-4z" />
+          <path d="M17 17h4v-9h-4z" />
+        </svg>
+        Rankings
+      </a>
+      <a
+        routerLink="/event-sched-and-stats"
+        routerLinkActive="ring-2 ring-offset-2 ring-indigo-400"
+        class="group inline-flex items-center gap-2 text-xs font-semibold tracking-wide uppercase rounded-full px-5 py-2.5 bg-gradient-to-r from-violet-500 via-indigo-500 to-blue-500 text-white shadow hover:shadow-lg transition-all duration-300 hover:from-violet-600 hover:to-blue-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+        aria-label="View event schedule and statistics"
+      >
+        <svg
+          class="w-4 h-4 text-indigo-600 group-hover:rotate-6 transition-transform"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          aria-hidden="true"
+        >
+          <rect x="3" y="4" width="18" height="18" rx="2" ry="2" />
+          <line x1="16" y1="2" x2="16" y2="6" />
+          <line x1="8" y1="2" x2="8" y2="6" />
+          <line x1="3" y1="10" x2="21" y2="10" />
+        </svg>
+        Schedule & Stats
+        <span
+          class="ml-1 text-[10px] font-medium bg-indigo-600 text-white px-2 py-0.5 rounded-full shadow-inner"
+          >New</span
+        >
+      </a>
+      @if (!currentUser()) {
+      <a
+        routerLink="/login"
+        class="inline-flex items-center gap-2 text-xs font-semibold tracking-wide uppercase rounded-full px-5 py-2.5 bg-white text-indigo-700 shadow hover:shadow-md transition-all duration-300 hover:bg-slate-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 border border-indigo-100"
+        aria-label="Log in"
+      >
+        <svg
+          class="w-4 h-4"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          aria-hidden="true"
+        >
+          <path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4" />
+          <polyline points="10 17 15 12 10 7" />
+          <line x1="15" y1="12" x2="3" y2="12" />
+        </svg>
+        Login
+      </a>
+      } @else {
+      <a
+        routerLink="/admin"
+        class="inline-flex items-center gap-2 text-xs font-semibold tracking-wide uppercase rounded-full px-5 py-2.5 bg-white text-indigo-700 shadow hover:shadow-md transition-all duration-300 hover:bg-slate-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 border border-indigo-100"
+        aria-label="Admin Dashboard"
+      >
+        <svg
+          class="w-4 h-4"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          aria-hidden="true"
+        >
+          <path d="M3 17h4V7H3z" />
+          <path d="M10 17h4V3h-4z" />
+          <path d="M17 17h4v-9h-4z" />
+        </svg>
+        Admin
+      </a>
+      }
+    </div>
   </div>
 </header>
 
 <main class="main-shell">
   <router-outlet />
 </main>
-<app-admin-controls></app-admin-controls>

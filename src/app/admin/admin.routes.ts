@@ -17,4 +17,11 @@ export const routes: Routes = [
         (m) => m.CollegeDetails
       ),
   },
+  {
+    path: 'event-sched-and-stats',
+    loadComponent: () =>
+      import('./event-sched-and-stats/event-sched-and-stats').then(
+        (m) => m.EventSchedAndStats
+      ),
+  },
 ];

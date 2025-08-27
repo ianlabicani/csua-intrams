@@ -1,0 +1,93 @@
+<div class="max-w-6xl mx-auto p-4 space-y-10">
+  <div class="flex flex-wrap items-center gap-3">
+    <h2 class="text-2xl font-bold tracking-tight">Event Schedule & Stats</h2>
+  </div>
+
+  <div
+    class="bg-white/70 backdrop-blur rounded-xl p-5 shadow border border-slate-200"
+  >
+    <h3 class="text-lg font-semibold mb-4 flex items-center gap-2">
+      <svg
+        class="w-5 h-5 text-indigo-600"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        aria-hidden="true"
+      >
+        <rect x="3" y="4" width="18" height="18" rx="2" ry="2" />
+        <line x1="16" y1="2" x2="16" y2="6" />
+        <line x1="8" y1="2" x2="8" y2="6" />
+        <line x1="3" y1="10" x2="21" y2="10" />
+      </svg>
+      Scheduled Matches
+    </h3>
+    <div *ngIf="(schedule$ | async) as schedule; else loading">
+      <div *ngIf="schedule.length; else empty" class="overflow-x-auto">
+        <table class="min-w-full text-sm">
+          <thead>
+            <tr
+              class="text-left text-slate-600 border-b text-xs uppercase tracking-wider"
+            >
+              <th class="py-2 pr-4">Sport</th>
+              <th class="py-2 pr-4">Category</th>
+              <th class="py-2 pr-4">Event</th>
+              <th class="py-2 pr-4">Game</th>
+              <th class="py-2 pr-4">Teams</th>
+              <th class="py-2 pr-4">Winner</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr
+              *ngFor="let row of schedule; trackBy: trackRow"
+              class="border-b last:border-b-0 hover:bg-indigo-50/50 transition"
+            >
+              <td class="py-2 pr-4 font-medium">{{ row.sport }}</td>
+              <td class="py-2 pr-4">{{ row.category || '-' }}</td>
+              <td class="py-2 pr-4">{{ row.event || '—' }}</td>
+              <td class="py-2 pr-4">{{ row.game }}</td>
+              <td class="py-2 pr-4">
+                <ng-container *ngIf="row.type === 'h2h'; else multi">
+                  <span class="font-semibold">{{ row.teams?.[0] }}</span>
+                  <span class="text-slate-500 text-[11px] px-1">vs</span>
+                  <span class="font-semibold">{{ row.teams?.[1] }}</span>
+                </ng-container>
+                <ng-template #multi>
+                  <div class="flex flex-wrap gap-1">
+                    <span
+                      *ngFor="let t of row.teams"
+                      class="px-2 py-0.5 rounded-full bg-slate-700 text-white text-[11px] font-medium"
+                      >{{ t }}</span
+                    >
+                  </div>
+                </ng-template>
+              </td>
+              <td class="py-2 pr-4 align-top">
+                <span
+                  *ngIf="row.winner; else pending"
+                  class="inline-block px-2 py-0.5 rounded bg-emerald-600 text-white text-[11px] font-medium"
+                  >{{ row.winner }}</span
+                >
+                <ng-template #pending>
+                  <span class="text-[11px] text-slate-400 italic">Pending</span>
+                </ng-template>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <ng-template #empty>
+        <div class="py-10 text-center text-slate-500 text-sm">
+          No schedule yet. Add one above or seed sample matches.
+        </div>
+      </ng-template>
+    </div>
+    <ng-template #loading>
+      <div class="py-10 text-center text-slate-400 text-sm animate-pulse">
+        Loading schedule…
+      </div>
+    </ng-template>
+  </div>
+</div>
