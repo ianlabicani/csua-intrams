@@ -1,5 +1,5 @@
-<header class="site-hero">
-  <div class="hero-inner">
+<header class="site-hero relative overflow-hidden">
+  <div class="hero-inner relative z-10">
     <div class="hero-logo-wrap">
       <img
         src="https://csu.edu.ph/img/topbanner-min-part1.jpg"
@@ -40,6 +40,7 @@
         </svg>
         Rankings
       </a>
+
       <a
         routerLink="/event-sched-and-stats"
         routerLinkActive="ring-2 ring-offset-2 ring-indigo-400"
@@ -67,6 +68,7 @@
           >New</span
         >
       </a>
+
       @if (!currentUser()) {
       <a
         routerLink="/login"
@@ -114,8 +116,28 @@
       }
     </div>
   </div>
+
+  <!-- 🎉 Floating intramural confetti icons -->
+  <div class="absolute inset-0 overflow-hidden z-0 pointer-events-none">
+    <span class="confetti">🏀</span>
+    <span class="confetti">🏐</span>
+    <span class="confetti">🏸</span>
+    <span class="confetti">🎾</span>
+    <span class="confetti">⚽</span>
+    <span class="confetti">🥎</span>
+    <span class="confetti">🥇</span>
+    <span class="confetti">🥈</span>
+    <span class="confetti">🥉</span>
+    <span class="confetti">🏆</span>
+    <span class="confetti">♟️</span>
+    <span class="confetti">🏃‍♂️</span>
+    <span class="confetti">🏃‍♀️</span>
+    <span class="confetti">💪</span>
+    <span class="confetti">🔥</span>
+    <span class="confetti">🎉</span>
+  </div>
 </header>
 
 <main class="main-shell">
-  <router-outlet />
+  <router-outlet></router-outlet>
 </main>
