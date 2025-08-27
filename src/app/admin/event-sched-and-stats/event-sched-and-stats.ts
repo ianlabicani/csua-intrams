@@ -18,10 +18,11 @@ import {
   Validators,
   FormArray,
 } from '@angular/forms';
+import { SchedSeeder } from './sched-seeder/sched-seeder';
 
 @Component({
   selector: 'app-admin-event-sched-and-stats',
-  imports: [CommonModule, ReactiveFormsModule],
+  imports: [CommonModule, ReactiveFormsModule, SchedSeeder],
   templateUrl: './event-sched-and-stats.html',
   styleUrl: './event-sched-and-stats.css',
 })

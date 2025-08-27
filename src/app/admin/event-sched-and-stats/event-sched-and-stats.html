@@ -201,6 +201,7 @@
             <tr
               class="text-left text-slate-600 border-b text-xs uppercase tracking-wider"
             >
+              <th class="py-2 pr-4 w-8">#</th>
               <th class="py-2 pr-4">Sport</th>
               <th class="py-2 pr-4">Category</th>
               <th class="py-2 pr-4">Event</th>
@@ -212,9 +213,10 @@
           </thead>
           <tbody>
             <tr
-              *ngFor="let row of schedule; trackBy: trackRow"
+              *ngFor="let row of schedule; let i = index; trackBy: trackRow"
               class="border-b last:border-b-0 hover:bg-indigo-50/50 transition"
             >
+              <td class="py-2 pr-4 text-slate-500">{{ i + 1 }}</td>
               <td class="py-2 pr-4 font-medium">{{ row.sport }}</td>
               <td class="py-2 pr-4">{{ row.category || '-' }}</td>
               <td class="py-2 pr-4">{{ row.event || '—' }}</td>
