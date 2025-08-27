@@ -1,6 +1,6 @@
 import { Component, inject } from '@angular/core';
 import { Auth } from '@angular/fire/auth';
-import { RouterLink } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-admin-controls',
@@ -10,4 +10,10 @@ import { RouterLink } from '@angular/router';
 })
 export class AdminControls {
   protected auth = inject(Auth);
+
+  router = inject(Router);
+
+  get isDashboard(): boolean {
+    return this.router.url.startsWith('/admin');
+  }
 }

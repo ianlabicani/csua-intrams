@@ -49,19 +49,28 @@
 
           <td
             class="text-center p-3 font-semibold text-yellow-600"
-            [countAnim]="item.gold"
             data-label="Gold"
-          ></td>
+          >
+            <span class="medal-chip medal-gold" [countAnim]="item.gold"></span>
+          </td>
           <td
             class="text-center p-3 font-semibold text-gray-500"
-            [countAnim]="item.silver"
             data-label="Silver"
-          ></td>
+          >
+            <span
+              class="medal-chip medal-silver"
+              [countAnim]="item.silver"
+            ></span>
+          </td>
           <td
             class="text-center p-3 font-semibold text-orange-600"
-            [countAnim]="item.bronze"
             data-label="Bronze"
-          ></td>
+          >
+            <span
+              class="medal-chip medal-bronze"
+              [countAnim]="item.bronze"
+            ></span>
+          </td>
           <td
             class="text-center p-3 font-bold text-indigo-700"
             [countAnim]="item.points"
