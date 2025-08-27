@@ -1,0 +1,118 @@
+<div class="space-y-4">
+  <h2 class="text-3xl font-bold text-center sub-gradient-title">
+    Finished Events
+  </h2>
+  <p class="text-center text-sm text-slate-500">
+    View results from completed competitions by category
+  </p>
+  @if (categories().length) {
+  <div class="flex gap-2">
+    <button
+      (click)="expandAllCategories()"
+      class="px-3 py-1 text-sm border rounded-4xl bg-white hover:bg-gray-50"
+    >
+      Expand All
+    </button>
+    <button
+      (click)="collapseAllCategories()"
+      class="px-3 py-1 text-sm border rounded-4xl bg-white hover:bg-gray-50"
+    >
+      Collapse All
+    </button>
+  </div>
+
+  } @for (cat of categories(); track cat.category; let i = $index) {
+  <div class="modern-card">
+    <button
+      type="button"
+      (click)="toggleCategory(cat.category)"
+      class="category-header"
+      [class.open]="isCategoryOpen(cat.category)"
+      [attr.aria-expanded]="isCategoryOpen(cat.category)"
+    >
+      <span class="cat-label">{{ cat.category }}</span>
+      <span class="count-pill">{{ cat.events.length }} events</span>
+      <span class="chevron" aria-hidden="true"></span>
+    </button>
+    @if (isCategoryOpen(cat.category)) {
+    <div class="border-t">
+      @for (ev of cat.events; track ev.name) {
+      <div class="border-b last:border-b-0 event-row">
+        <button
+          type="button"
+          (click)="toggleEvent(ev.name)"
+          class="event-toggle"
+          [class.bg-indigo-50]="isEventOpen(ev.name)"
+          [class.border-indigo-500]="isEventOpen(ev.name)"
+          [class.font-semibold]="isEventOpen(ev.name)"
+          [class.open]="isEventOpen(ev.name)"
+        >
+          <span class="ev-name">{{ ev.name }}</span>
+          <span class="entries">{{ ev.rows.length }} entries</span>
+          <span class="chevron" aria-hidden="true"></span>
+        </button>
+        @if (isEventOpen(ev.name)) {
+        <div class="px-6 pb-4 overflow-x-auto modern-card mt-2">
+          <table class="min-w-full text-xs table-modern stack-mobile">
+            <thead class="bg-gray-100/70 text-gray-600 uppercase">
+              <tr>
+                <th class="p-2 text-left">Rank</th>
+                <th class="p-2 text-left">College</th>
+                <th class="p-2 text-center">🥇</th>
+                <th class="p-2 text-center">🥈</th>
+                <th class="p-2 text-center">🥉</th>
+                <th class="p-2 text-center">Points</th>
+              </tr>
+            </thead>
+            <tbody>
+              @for (row of ev.rows; track row.collegeId) {
+              <tr
+                class="border-t event-result-row text-white"
+                [style.background]="row.color || ''"
+                [class.has-color]="!!row.color"
+              >
+                <td class="p-2 font-semibold" data-label="Rank">
+                  {{ row.rank }}
+                </td>
+                <td class="p-2" data-label="College">{{ row.college }}</td>
+                <td
+                  class="p-2 text-center"
+                  [countAnim]="row.gold"
+                  data-label="Gold"
+                ></td>
+                <td
+                  class="p-2 text-center"
+                  [countAnim]="row.silver"
+                  data-label="Silver"
+                ></td>
+                <td
+                  class="p-2 text-center"
+                  [countAnim]="row.bronze"
+                  data-label="Bronze"
+                ></td>
+                <td
+                  class="p-2 text-center font-semibold"
+                  [countAnim]="row.points"
+                  data-label="Points"
+                ></td>
+              </tr>
+              }
+            </tbody>
+          </table>
+        </div>
+        }
+      </div>
+      }
+    </div>
+    }
+  </div>
+  } @empty {
+  <div class="p-8 text-center text-gray-500 space-y-2">
+    <h3 class="text-lg font-medium text-gray-700">No Events Recorded Yet</h3>
+    <p class="text-sm">
+      Competition results will appear here once events are completed and scores
+      are recorded.
+    </p>
+  </div>
+  }
+</div>
