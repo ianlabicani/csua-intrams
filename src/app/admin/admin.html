@@ -1,47 +1,53 @@
-<div class="max-w-6xl mx-auto p-6">
+<div class="max-w-6xl mx-auto p-4 md:p-6">
   <!-- Header -->
-  <div class="flex justify-between items-center mb-6">
-    <div class="flex items-center gap-6">
-      <h1 class="text-3xl font-bold">⚙️ Admin Dashboard</h1>
-      <a
-        routerLink="/admin/colleges"
-        routerLinkActive="ring-2 ring-offset-2 ring-indigo-400"
-        class="group inline-flex items-center gap-2 text-xs font-medium px-4 py-2 rounded-full bg-gradient-to-r from-indigo-500 via-blue-500 to-cyan-400 text-white shadow-sm hover:shadow-md hover:from-indigo-600 hover:to-cyan-500 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-400 active:scale-[.97]"
-        aria-label="View standings overview"
-      >
-        <span class="relative flex items-center">
-          <span class="pl-1 tracking-wide">🏆 Standings</span>
-        </span>
-        <span
-          class="ml-1 inline-flex items-center text-[10px] font-semibold uppercase tracking-wider bg-white/20 group-hover:bg-white/25 px-2 py-0.5 rounded-full backdrop-blur-sm transition-colors"
-          >Manage</span
+  <div
+    class="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-4 mb-6"
+  >
+    <div class="flex flex-wrap items-center gap-3">
+      <h1 class="text-2xl md:text-3xl font-bold w-full sm:w-auto">
+        ⚙️ Admin Dashboard
+      </h1>
+      <div class="flex gap-3 overflow-x-auto max-w-full pb-1 sm:pb-0 snap-x">
+        <a
+          routerLink="/admin/colleges"
+          routerLinkActive="ring-2 ring-offset-2 ring-indigo-400"
+          class="group inline-flex items-center gap-2 text-[11px] font-medium px-3 py-2 rounded-full bg-gradient-to-r from-indigo-500 via-blue-500 to-cyan-400 text-white shadow-sm hover:shadow-md hover:from-indigo-600 hover:to-cyan-500 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-400 active:scale-[.97] snap-start"
+          aria-label="View standings overview"
         >
-      </a>
-      <a
-        routerLink="/admin/event-sched-and-stats"
-        routerLinkActive="ring-2 ring-offset-2 ring-violet-400"
-        class="group inline-flex items-center gap-2 text-xs font-medium px-4 py-2 rounded-full bg-gradient-to-r from-violet-500 via-indigo-500 to-blue-500 text-white shadow-sm hover:shadow-md hover:from-violet-600 hover:to-blue-600 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-violet-400 active:scale-[.97]"
-        aria-label="Manage event schedule & stats"
-      >
-        <span class="relative flex items-center">
-          <span class="pl-1 tracking-wide">📅 Schedule</span>
-        </span>
-        <span
-          class="ml-1 inline-flex items-center text-[10px] font-semibold uppercase tracking-wider bg-white/20 group-hover:bg-white/25 px-2 py-0.5 rounded-full backdrop-blur-sm transition-colors"
-          >Manage</span
+          <span class="relative flex items-center">
+            <span class="tracking-wide">🏆 Standings</span>
+          </span>
+          <span
+            class="ml-1 inline-flex items-center text-[9px] font-semibold uppercase tracking-wider bg-white/20 group-hover:bg-white/25 px-2 py-0.5 rounded-full backdrop-blur-sm transition-colors"
+            >Manage</span
+          >
+        </a>
+        <a
+          routerLink="/admin/event-sched-and-stats"
+          routerLinkActive="ring-2 ring-offset-2 ring-violet-400"
+          class="group inline-flex items-center gap-2 text-[11px] font-medium px-3 py-2 rounded-full bg-gradient-to-r from-violet-500 via-indigo-500 to-blue-500 text-white shadow-sm hover:shadow-md hover:from-violet-600 hover:to-blue-600 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-violet-400 active:scale-[.97] snap-start"
+          aria-label="Manage event schedule & stats"
         >
-      </a>
+          <span class="relative flex items-center">
+            <span class="tracking-wide">📅 Schedule</span>
+          </span>
+          <span
+            class="ml-1 inline-flex items-center text-[9px] font-semibold uppercase tracking-wider bg-white/20 group-hover:bg-white/25 px-2 py-0.5 rounded-full backdrop-blur-sm transition-colors"
+            >Manage</span
+          >
+        </a>
+      </div>
     </div>
     <button
       (click)="logout()"
-      class="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-lg shadow"
+      class="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-lg shadow w-full sm:w-auto"
     >
       Logout
     </button>
   </div>
 
   <!-- Main Content -->
-  <div class="bg-white shadow rounded-xl p-6">
+  <div class="bg-white shadow rounded-xl p-4 md:p-6">
     <router-outlet></router-outlet>
   </div>
 </div>
