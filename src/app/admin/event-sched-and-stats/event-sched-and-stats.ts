@@ -8,7 +8,8 @@ import {
   deleteDoc,
 } from '@angular/fire/firestore';
 import { collectionData } from '@angular/fire/firestore';
-import { Observable, map } from 'rxjs';
+import { Observable, map, firstValueFrom, tap } from 'rxjs';
+import { collectionData as colData } from '@angular/fire/firestore';
 import { CommonModule } from '@angular/common';
 import {
   ReactiveFormsModule,
@@ -26,6 +27,8 @@ import {
 })
 export class EventSchedAndStats {
   schedule$!: Observable<any[]>;
+  colleges$!: Observable<any[]>;
+  private colorByAcronym: Record<string, string> = {};
 
   form = new FormGroup({
     sport: new FormControl('', {
@@ -52,6 +55,18 @@ export class EventSchedAndStats {
 
   constructor(private firestore: Firestore) {
     const schedCollection = collection(this.firestore, 'schedule');
+    const collegesRef = collection(this.firestore, 'colleges');
+    this.colleges$ = colData(collegesRef, { idField: 'id' }).pipe(
+      tap((list: any[]) => {
+        this.colorByAcronym = {};
+        list.forEach((c: any) => {
+          const acr = this.acronym(c.name || '').trim();
+          if (acr)
+            this.colorByAcronym[acr] =
+              c.color || this.colorByAcronym[acr] || '';
+        });
+      })
+    );
     this.schedule$ = collectionData(schedCollection, { idField: 'id' }).pipe(
       map((rows: any[]) =>
         [...rows].sort((a, b) => {
@@ -71,10 +86,10 @@ export class EventSchedAndStats {
   }
 
   addTeamField() {
+    // Additional team fields are optional; we'll validate count manually.
     this.teamsArray.push(
       new FormControl('', {
         nonNullable: true,
-        validators: [Validators.required],
       })
     );
   }
@@ -105,14 +120,25 @@ export class EventSchedAndStats {
   }
 
   async addSchedule() {
-    if (this.form.invalid) {
+    if (!this.canSubmit()) {
       this.form.markAllAsTouched();
       return;
     }
     const raw = this.form.getRawValue();
-    const teams = this.teamsArray.controls
-      .map((c) => c.value.trim())
-      .filter((v, idx, arr) => !!v && arr.indexOf(v) === idx);
+    let teams: string[] = [];
+    if (raw.type === 'multi') {
+      // Auto-include all colleges (unique, non-empty)
+      const colleges = await firstValueFrom(this.colleges$);
+      teams = colleges
+        .map((c: any) => this.acronym((c.name || '').trim()))
+        .filter((v: string) => !!v);
+      teams = [...new Set(teams)];
+    } else {
+      // h2h - take the two selected colleges
+      teams = this.teamsArray.controls
+        .map((c) => c.value.trim())
+        .filter((v, idx, arr) => !!v && arr.indexOf(v) === idx);
+    }
     if (teams.length < 2) return; // safety
     const payload: any = {
       sport: raw.sport.trim(),
@@ -137,19 +163,20 @@ export class EventSchedAndStats {
     });
     // reset teams controls
     while (this.teamsArray.length) this.teamsArray.removeAt(0);
-    this.teamsArray.push(
-      new FormControl('', {
-        nonNullable: true,
-        validators: [Validators.required],
-      })
-    );
-    this.teamsArray.push(
-      new FormControl('', {
-        nonNullable: true,
-        validators: [Validators.required],
-      })
-    );
-    if (keepType === 'multi') this.addTeamField();
+    if (keepType === 'h2h') {
+      this.teamsArray.push(
+        new FormControl('', {
+          nonNullable: true,
+          validators: [Validators.required],
+        })
+      );
+      this.teamsArray.push(
+        new FormControl('', {
+          nonNullable: true,
+          validators: [Validators.required],
+        })
+      );
+    }
   }
 
   trackRow(_index: number, row: any) {
@@ -175,5 +202,45 @@ export class EventSchedAndStats {
     if (!ok) return;
     const ref = doc(this.firestore, 'schedule', row.id);
     await deleteDoc(ref);
+  }
+
+  canSubmit(): boolean {
+    const sportValid = this.form.get('sport')?.valid;
+    const gameValid = this.form.get('game')?.valid;
+    if (!sportValid || !gameValid) return false;
+    const type = this.form.get('type')?.value || 'h2h';
+    if (type === 'multi') {
+      // Rely on presence of at least 2 colleges; assume true here (data driven)
+      return true;
+    }
+    const teams = this.teamsArray.controls
+      .map((c) => c.value.trim())
+      .filter((v, idx, arr) => !!v && arr.indexOf(v) === idx);
+    return teams.length === 2;
+  }
+
+  acronym(raw: string): string {
+    if (!raw) return '';
+    const stop = new Set(['of', 'the', 'and', 'for', 'in', 'on', 'at', 'de']);
+    return raw
+      .split(/[_\s]+/)
+      .filter((p) => p && !stop.has(p.toLowerCase()))
+      .map((p) => p[0].toUpperCase())
+      .join('');
+  }
+
+  isCollegeSelectable(name: string, index: number): boolean {
+    if (!name) return false;
+    const target = this.acronym(name).trim();
+    const currentValue = this.teamsArray.at(index)?.value?.trim(); // already an acronym
+    const chosen = this.teamsArray.controls
+      .map((c, i) => (i === index ? null : c.value?.trim()))
+      .filter((v): v is string => !!v);
+    // Allow if acronym not chosen elsewhere OR it's the current control's value
+    return !chosen.includes(target) || currentValue === target;
+  }
+
+  colorFor(acronym: string): string {
+    return this.colorByAcronym[acronym] || '#475569'; // fallback slate
   }
 }
