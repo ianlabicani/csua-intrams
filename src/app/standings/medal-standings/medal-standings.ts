@@ -1,7 +1,7 @@
 import { Component, computed, input, signal } from '@angular/core';
 import { CountAnimDirective } from '../count-anim.directive';
 import { ICollege } from '../../admin/colleges/colleges';
-import { IMedal } from '../../admin/medals/medals';
+import { IMedal } from '../standings';
 
 @Component({
   selector: 'app-medal-standings',

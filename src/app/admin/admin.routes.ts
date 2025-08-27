@@ -17,8 +17,4 @@ export const routes: Routes = [
         (m) => m.CollegeDetails
       ),
   },
-  {
-    path: 'medals',
-    loadComponent: () => import('./medals/medals').then((m) => m.Medals),
-  },
 ];
