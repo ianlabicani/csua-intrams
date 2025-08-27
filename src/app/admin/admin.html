@@ -5,10 +5,18 @@
       <h1 class="text-3xl font-bold">⚙️ Admin Dashboard</h1>
       <a
         routerLink="/standings"
-        routerLinkActive="font-semibold"
-        class="text-sm text-blue-600 hover:underline"
-        >View Standings</a
+        routerLinkActive="ring-2 ring-offset-2 ring-indigo-400"
+        class="group inline-flex items-center gap-2 text-xs font-medium px-4 py-2 rounded-full bg-gradient-to-r from-indigo-500 via-blue-500 to-cyan-400 text-white shadow-sm hover:shadow-md hover:from-indigo-600 hover:to-cyan-500 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-400 active:scale-[.97]"
+        aria-label="View standings overview"
       >
+        <span class="relative flex items-center">
+          <span class="pl-1 tracking-wide">🏆 Standings</span>
+        </span>
+        <span
+          class="ml-1 inline-flex items-center text-[10px] font-semibold uppercase tracking-wider bg-white/20 group-hover:bg-white/25 px-2 py-0.5 rounded-full backdrop-blur-sm transition-colors"
+          >View</span
+        >
+      </a>
     </div>
     <button
       (click)="logout()"

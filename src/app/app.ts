@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-import { AdminControls } from './admin-controls/admin-controls';
+import { AdminControls } from './admin/admin-controls/admin-controls';
 
 @Component({
   selector: 'app-root',
