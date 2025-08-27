@@ -33,7 +33,6 @@
             >
               <th class="py-2 pr-4">Sport</th>
               <th class="py-2 pr-4">Category</th>
-              <th class="py-2 pr-4">Event</th>
               <th class="py-2 pr-4">Game</th>
               <th class="py-2 pr-4">Teams</th>
               <th class="py-2 pr-4">Winner</th>
@@ -46,7 +45,6 @@
             >
               <td class="py-2 pr-4 font-medium">{{ row.sport }}</td>
               <td class="py-2 pr-4">{{ row.category || '-' }}</td>
-              <td class="py-2 pr-4">{{ row.event || '—' }}</td>
               <td class="py-2 pr-4">{{ row.game }}</td>
               <td class="py-2 pr-4">
                 <ng-container *ngIf="row.type === 'h2h'; else multi">
@@ -67,7 +65,7 @@
               <td class="py-2 pr-4 align-top">
                 <span
                   *ngIf="row.winner; else pending"
-                  class="inline-block px-2 py-0.5 rounded bg-emerald-600 text-white text-[11px] font-medium"
+                  class="inline-block px-2 py-0.5 rounded bg-yellow-400 text-white text-[11px] font-medium"
                   >{{ row.winner }}</span
                 >
                 <ng-template #pending>
