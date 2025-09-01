@@ -16,7 +16,6 @@ export class PointsBasedRanking {
     const colleges = this.colleges();
     const rows = colleges.map((c) => {
       const events = (c as any).events || ({} as Record<string, any>);
-      let points = 0;
       let gold = 0,
         silver = 0,
         bronze = 0;
@@ -25,12 +24,11 @@ export class PointsBasedRanking {
         const pcRaw =
           ev && typeof ev.playerCount === 'number' ? ev.playerCount : 1;
         const playerCount = pcRaw > 0 ? pcRaw : 1;
-        points += p * playerCount;
-        // Medal tally counts occurrences, not multiplied by participants
-        if (p === 5) gold++;
-        else if (p === 3) silver++;
-        else if (p === 1) bronze++;
+        if (p === 5) gold += playerCount;
+        else if (p === 3) silver += playerCount;
+        else if (p === 1) bronze += playerCount;
       });
+      const points = gold * 5 + silver * 3 + bronze * 1;
       return {
         id: (c as any).id,
         name: c.name,

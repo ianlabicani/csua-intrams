@@ -43,11 +43,10 @@ export class Colleges {
 
   totalPoints(college: ICollege): number {
     if (!college.events) return 0;
-    return Object.values(college.events).reduce((sum, ev) => {
-      const pts = typeof ev.points === 'number' ? ev.points : 0;
-      const pc = typeof ev.playerCount === 'number' && ev.playerCount > 0 ? ev.playerCount : 1;
-      return sum + pts * pc;
-    }, 0);
+    return Object.values(college.events).reduce(
+      (sum, ev) => sum + (ev.points || 0),
+      0
+    );
   }
 
   // Build an acronym from a snake_case id, skipping common stop words (e.g. 'of')

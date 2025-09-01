@@ -77,10 +77,13 @@ export class MedalStandings {
         Object.values(events).forEach((ev: any) => {
           const p = ev?.points;
           if (![5, 3, 1].includes(p)) return;
+          const pcRaw =
+            ev && typeof ev.playerCount === 'number' ? ev.playerCount : 1;
+          const playerCount = pcRaw > 0 ? pcRaw : 1;
           if (!map[c.id]) map[c.id] = zeroEntry(c);
-          if (p === 5) map[c.id].gold++;
-          else if (p === 3) map[c.id].silver++;
-          else if (p === 1) map[c.id].bronze++;
+          if (p === 5) map[c.id].gold += playerCount;
+          else if (p === 3) map[c.id].silver += playerCount;
+          else if (p === 1) map[c.id].bronze += playerCount;
         });
         if (!map[c.id]) map[c.id] = zeroEntry(c); // include even with no events
       });
