@@ -26,7 +26,7 @@ export interface IEvent {
 export class Colleges {
   private firestore = inject(Firestore);
 
-  private collegesRef = collection(this.firestore, 'colleges');
+  private collegesRef = collection(this.firestore, 'colleges-new');
   colleges = signal<ICollege[]>([]);
 
   ngOnInit(): void {

@@ -56,7 +56,7 @@ export class EventSchedAndStats {
 
   constructor(private firestore: Firestore) {
     const schedCollection = collection(this.firestore, 'schedule');
-    const collegesRef = collection(this.firestore, 'colleges');
+    const collegesRef = collection(this.firestore, 'colleges-new');
     this.colleges$ = colData(collegesRef, { idField: 'id' }).pipe(
       tap((list: any[]) => {
         this.colorByAcronym = {};

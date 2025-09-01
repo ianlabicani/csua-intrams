@@ -51,7 +51,7 @@ export class CollegeDetails {
       return;
     }
     this.collegeId.set(id);
-    const ref = doc(this.firestore, 'colleges', id);
+    const ref = doc(this.firestore, 'colleges-new', id);
     docData(ref)
       .pipe(take(1))
       .subscribe({
@@ -106,7 +106,7 @@ export class CollegeDetails {
   async save() {
     if (!this.form.valid) return;
     const id = this.collegeId();
-    const ref = doc(this.firestore, 'colleges', id);
+    const ref = doc(this.firestore, 'colleges-new', id);
     const current = this.college();
     if (!current) return;
     const updatedEvents: any = { ...current.events };

@@ -22,7 +22,7 @@ export interface IMedal {
 export class Standings {
   private firestore = inject(Firestore);
   auth = inject(Auth);
-  private collegesRef = collection(this.firestore, 'colleges');
+  private collegesRef = collection(this.firestore, 'colleges-new');
   medals = signal<IMedal[]>([]);
   colleges = signal<ICollege[]>([]);
   categoryExpanded = signal<Set<string>>(new Set());
