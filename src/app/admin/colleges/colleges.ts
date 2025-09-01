@@ -43,10 +43,21 @@ export class Colleges {
 
   totalPoints(college: ICollege): number {
     if (!college.events) return 0;
-    return Object.values(college.events).reduce(
-      (sum, ev) => sum + (ev.points || 0),
-      0
-    );
+    let gold = 0,
+      silver = 0,
+      bronze = 0;
+    Object.values(college.events).forEach((ev) => {
+      const p = typeof ev.points === 'number' ? ev.points : 0;
+      if (![5, 3, 1].includes(p)) return; // ignore other point values
+      const pc =
+        typeof ev.playerCount === 'number' && ev.playerCount > 0
+          ? ev.playerCount
+          : 1;
+      if (p === 5) gold += pc;
+      else if (p === 3) silver += pc;
+      else if (p === 1) bronze += pc;
+    });
+    return gold * 5 + silver * 3 + bronze * 1;
   }
 
   // Build an acronym from a snake_case id, skipping common stop words (e.g. 'of')
