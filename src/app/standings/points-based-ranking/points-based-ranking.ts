@@ -22,7 +22,11 @@ export class PointsBasedRanking {
         bronze = 0;
       Object.values(events).forEach((ev: any) => {
         const p = ev && typeof ev.points === 'number' ? ev.points : 0;
-        points += p;
+        const pcRaw =
+          ev && typeof ev.playerCount === 'number' ? ev.playerCount : 1;
+        const playerCount = pcRaw > 0 ? pcRaw : 1;
+        points += p * playerCount;
+        // Medal tally counts occurrences, not multiplied by participants
         if (p === 5) gold++;
         else if (p === 3) silver++;
         else if (p === 1) bronze++;
