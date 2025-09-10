@@ -25,13 +25,13 @@ export const routes: Routes = [
     loadComponent: () => import('./admin/admin').then((m) => m.Admin),
     loadChildren: () => import('./admin/admin.routes').then((m) => m.routes),
   },
-  {
-    path: 'event-sched-and-stats',
-    loadComponent: () =>
-      import('./event-sched-and-stats/event-sched-and-stats').then(
-        (m) => m.EventSchedAndStats
-      ),
-  },
+  // {
+  //   path: 'event-sched-and-stats',
+  //   loadComponent: () =>
+  //     import('./event-sched-and-stats/event-sched-and-stats').then(
+  //       (m) => m.EventSchedAndStats
+  //     ),
+  // },
   {
     path: '**',
     redirectTo: 'standings',
